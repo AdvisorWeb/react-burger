@@ -1,0 +1,29 @@
+.categories{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.title{
+    width: 100%;
+}
+.wrp{
+    width: calc(50% - 20px);
+}
+.list{
+    overflow: hidden;
+    width: 100%;
+}
+.scrollbar-track{
+    opacity: 1;
+}
+.tabs{
+    display: flex;
+    flex-wrap: wrap;
+}
+.tabs > div{
+    flex: 1;
+}
+.categoryTitle{
+    margin-left: -16px;
+}

@@ -1,0 +1,8 @@
+.home{
+    height: calc(100vh - 88px);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 40px;
+
+}

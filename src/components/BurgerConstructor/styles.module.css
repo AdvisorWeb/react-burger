@@ -1,0 +1,33 @@
+.wrp{
+    width: calc(50% - 20px);
+}
+.centerWrp{
+    gap: calc(var(--offset-base-size)  * 4);
+    display: flex;
+    flex-direction: column;
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.price{
+    display: flex;
+    align-items: center;
+    font-size: 48px;
+}
+.price svg{
+    width: 36px;
+    height: 36px;
+}
+.drag{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: grab;
+}
+.drag:active{
+    cursor: grabbing;
+}
