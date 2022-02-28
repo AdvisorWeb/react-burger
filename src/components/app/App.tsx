@@ -4,7 +4,6 @@ import AppHeader from "../AppHeader/AppHeader";
 import { Home } from "../../pages/index";
 import data from '../../utils/data'
 
-import './App.css';
 
 function App() {
     return (

@@ -1,15 +1,13 @@
-.button{
+.link{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0;
-    border: 0;
     background: none;
     cursor: pointer;
     transition: .3s;
     backface-visibility: hidden;
 }
-.button:active{
+.link:active{
     transform: translateY(2px);
 }
 .header{

@@ -13,7 +13,7 @@ function CardIngredient({card}) {
                 <img src={card.image} alt=""/>
             </div>
             <div className={`${styles.price} pb-1`}>
-                <span className={'pr-2'}>{card.price}</span>
+                <span className={'pr-2 text text_type_digits-default'}>{card.price}</span>
                 <CurrencyIcon type="primary"/>
             </div>
             <div className={styles.name}> {card.name} </div>

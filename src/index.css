@@ -172,3 +172,8 @@ button{
     cursor: pointer;
     border: 0;
 }
+
+body .constructor-element{
+    max-width: calc(100% - 32px);
+    margin-left: 32px;
+}

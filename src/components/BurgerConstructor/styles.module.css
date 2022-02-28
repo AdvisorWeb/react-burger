@@ -31,3 +31,10 @@
 .drag:active{
     cursor: grabbing;
 }
+
+
+.constructorElement{
+    display: flex;
+    align-items: center;
+    position: relative;
+}

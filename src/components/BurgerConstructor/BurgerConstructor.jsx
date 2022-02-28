@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import {categoryProp} from '../../utils/variablePropType.js'
 
 import styles from './styles.module.css'
-import './style.css'
 
 function BurgerConstructor({initScroll, category}) {
     const scrollContainer = React.useRef(null);
@@ -45,7 +44,7 @@ function BurgerConstructor({initScroll, category}) {
                         {
                             category[2].ingredient.map(item => {
                                 return (
-                                    <div className={'constructor-element__wrp'} key={item._id}>
+                                    <div className={styles.constructorElement} key={item._id}>
                                         <div className={styles.drag}>
                                             <DragIcon type="primary"/>
                                         </div>
@@ -79,7 +78,7 @@ function BurgerConstructor({initScroll, category}) {
                 ref={(ref) => !negativeItems.current.includes(ref) && negativeItems.current.push(ref)}
             >
                 <span className={`${styles.price} mr-10`}>
-                    <span className="pr-2">20</span>
+                    <span className="pr-2 text text_type_digits-medium">20</span>
                     <CurrencyIcon
                         type={'primary'}
                         className={'icon'}
@@ -95,7 +94,7 @@ function BurgerConstructor({initScroll, category}) {
 }
 
 BurgerConstructor.propTypes = {
-    initScroll: PropTypes.string.isRequired,
+    initScroll: PropTypes.func.isRequired,
     category: categoryProp.isRequired
 };
 

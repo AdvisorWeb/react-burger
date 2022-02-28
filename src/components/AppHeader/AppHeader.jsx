@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import styles from './styles..module.css'
+import styles from './styles.module.css'
 
 function AppHeader() {
     return (
@@ -10,23 +10,23 @@ function AppHeader() {
             <div className="container">
                 <div className={styles.wrp}>
                     <nav>
-                        <button className={'pt-4 pb-4 pl-5 pr-5 mr-2 ' + styles.button}>
+                        <a className={'pt-4 pb-4 pl-5 pr-5 mr-2 text text_type_main-default ' + styles.link}>
                             <BurgerIcon type="primary" size="medium"/>
                             <span className={'pl-2'} style={{color: '#fff'}}>Конструктор</span>
-                        </button>
-                        <button className={'pt-4 pb-4 pl-5 pr-5 ' + styles.button}>
+                        </a>
+                        <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link}>
                             <ListIcon type="secondary" size="medium"/>
                             <span className={'pl-2 text_color_inactive'}>Лента заказов</span>
-                        </button>
+                        </a>
                     </nav>
                     <a href="/" className={styles.logo}>
                         <Logo/>
                     </a>
                     <nav>
-                        <button className={'pt-4 pb-4 pl-5 pr-5 ' + styles.button}>
+                        <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link}>
                             <ProfileIcon type="secondary" size="medium"/>
                             <span className={'pl-2 text_color_inactive'}>Личный кабинет</span>
-                        </button>
+                        </a>
                     </nav>
                 </div>
             </div>
