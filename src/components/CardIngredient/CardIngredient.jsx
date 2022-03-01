@@ -5,9 +5,9 @@ import {objProp} from '../../utils/variablePropType.js'
 
 import styles from './style.module.css'
 
-function CardIngredient({card}) {
+function CardIngredient({card, onClick}) {
     return (
-        <div className={`${styles.item} mb-8`}>
+        <div className={`${styles.item} mb-8`} onClick={()=> onClick(card)}>
             {card.__v !== 0 && <Counter count={card.__v} size="default"/>}
             <div className={`${styles.img} pb-1 pl-4 pr-4`}>
                 <img src={card.image} alt=""/>

@@ -16,8 +16,7 @@ export const objProp = PropTypes.shape({
 });
 
 export const categoryProp = PropTypes.arrayOf(PropTypes.shape({
-    categoryOrder:  PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     typeName: PropTypes.string.isRequired,
-    ingredient: arrayOf(objProp).isRequired
+    ingredients: arrayOf(objProp).isRequired
 }))

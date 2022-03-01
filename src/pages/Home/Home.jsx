@@ -2,46 +2,13 @@ import React from 'react';
 
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
+
 import PropTypes from 'prop-types'
 import {objProp} from '../../utils/variablePropType.js'
 
 import styles from './home.module.css'
 
 function Home({ingredients}) {
-    let category = []
-    new Set(ingredients.map(item => item.type)).forEach((type) => {
-        let obj;
-        switch (true) {
-            case type === 'bun' :
-                obj = {
-                    type,
-                    typeName: 'Булка',
-                    categoryOrder: 1,
-                    ingredient: ingredients.filter(item => item.type === type)
-                }
-                break;
-            case type === "sauce" :
-                obj = {
-                    type,
-                    typeName: 'Соусы',
-                    categoryOrder: 2,
-                    ingredient: ingredients.filter(item => item.type === type)
-                }
-                break
-            case type === 'main' :
-                obj = {
-                    type,
-                    typeName: 'Основа',
-                    categoryOrder: 3,
-                    ingredient: ingredients.filter(item => item.type === type)
-                }
-                break
-            default :
-                return false
-        }
-        category[obj.categoryOrder - 1] = obj
-    })
-
     const initScroll = (scrollContainer, negativeItems = false) => {
         setTimeout(() => {
             if (scrollContainer) {
@@ -53,12 +20,29 @@ function Home({ingredients}) {
             }
         }, 0)
     }
+    const typeTranslate = (type) => {
+        if (type === 'bun') {
+            return 'Булка'
+        } else if (type === 'sauce') {
+            return 'Соус'
+        } else if (type === 'main') {
+            return 'Начинки'
+        }
+    }
+    const categoryType = [...new Set(ingredients.map(item => item.type))].map(item => {
+        return {
+            type: item,
+            typeName: typeTranslate(item),
+            ingredients: ingredients.filter(a => a.type === item)
+        }
+    })
+
     return (
         <div className={`${styles.home} pb-10`}>
-            <BurgerIngredients category={category} initScroll={initScroll}/>
-            <BurgerConstructor initScroll={initScroll} category={category}/>
+            <BurgerIngredients category={categoryType} initScroll={initScroll}/>
+            <BurgerConstructor initScroll={initScroll} category={categoryType}/>
         </div>
-    );
+    )
 }
 
 Home.propTypes = {

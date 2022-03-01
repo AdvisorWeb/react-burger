@@ -1,0 +1,29 @@
+.modal{
+    max-width: 720px;
+    width: 100%;
+    background: #1C1C21;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+    box-sizing: border-box;
+    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    position: relative;
+}
+.modalName{
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+    padding-right: 30px;
+}
+
+.modalClose{
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+}
