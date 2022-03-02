@@ -20,10 +20,6 @@ function BurgerIngredients({category, initScroll}) {
     const togglePopup = (card) => {
         card && setCardSelected(card)
         setIsPopup(!isPopup)
-        window.addEventListener('keydown', (event) => {
-            const key = event.keyCode
-            key === 27 && setIsPopup(false)
-        });
     }
 
     useEffect(() => {
@@ -91,7 +87,7 @@ function BurgerIngredients({category, initScroll}) {
             </div>
             {
                 isPopup && cardSelected &&
-                <Modal name={'Детали ингредиента'} onClick={togglePopup} >
+                <Modal name={'Детали ингредиента'} onClick={togglePopup} setIsPopup={setIsPopup}>
                     <IngredientDetails cardSelected={cardSelected}/>
                 </Modal>
             }

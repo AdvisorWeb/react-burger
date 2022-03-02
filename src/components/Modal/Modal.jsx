@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom'
 
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
@@ -7,11 +7,22 @@ import {modalRoot} from '../../utils/consts'
 
 import styles from './styles.module.css'
 
-function Modal({name = false, onClick, children}) {
+function Modal({name = false, onClick, children, setIsPopup}) {
 
+    const closePopup = (event) => {
+        const key = event.keyCode
+        key === 27 && setIsPopup(false)
+    }
     const stopPropagation  = (e) => {
         e.stopPropagation()
     }
+
+    useEffect(
+        ()=> {
+            window.addEventListener('keydown', closePopup)
+            return () => window.removeEventListener('keydown', closePopup)
+        }
+    )
 
     return ReactDOM.createPortal(
         <ModalOverlay onClick={onClick}>

@@ -17,10 +17,6 @@ function BurgerConstructor({initScroll, category}) {
 
     const togglePopup = () => {
         setIsPopup(!isPopup)
-        window.addEventListener('keydown', (event) => {
-            const key = event.keyCode
-            key === 27 &&  setIsPopup(false)
-        });
     }
 
     useEffect(() => {
@@ -106,7 +102,7 @@ function BurgerConstructor({initScroll, category}) {
             </div>
             {
                 isPopup &&
-                <Modal  onClick={togglePopup} >
+                <Modal onClick={togglePopup} setIsPopup={setIsPopup} >
                     <OrderDetails />
                 </Modal>
             }
