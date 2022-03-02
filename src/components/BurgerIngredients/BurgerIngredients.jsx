@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 import CardIngredient from '../CardIngredient/CardIngredient'
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
@@ -92,11 +91,9 @@ function BurgerIngredients({category, initScroll}) {
             </div>
             {
                 isPopup && cardSelected &&
-                <ModalOverlay onClick={togglePopup}>
-                    <Modal name={'Детали ингредиента'} onClick={togglePopup} >
-                        <IngredientDetails cardSelected={cardSelected}/>
-                    </Modal>
-                </ModalOverlay>
+                <Modal name={'Детали ингредиента'} onClick={togglePopup} >
+                    <IngredientDetails cardSelected={cardSelected}/>
+                </Modal>
             }
         </>
     );

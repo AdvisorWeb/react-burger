@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
 
+import {url} from '../../utils/consts'
 import AppHeader from "../AppHeader/AppHeader";
 import { Home } from "../../pages/index";
 
 import styles from './style.module.css'
 
 function App() {
-    const url = 'https://norma.nomoreparties.space/api/ingredients'
+
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    const getData = async () => {
-        await fetch(url)
+    const getData = () => {
+        fetch(url)
             .then(res => res.json())
             .then(data => {
                 setData(data.data)

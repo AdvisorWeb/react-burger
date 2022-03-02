@@ -5,7 +5,6 @@ import {Scrollbar} from 'smooth-scrollbar-react';
 import PropTypes from "prop-types";
 import {categoryProp} from '../../utils/variablePropType.js'
 
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
@@ -107,11 +106,9 @@ function BurgerConstructor({initScroll, category}) {
             </div>
             {
                 isPopup &&
-                <ModalOverlay onClick={togglePopup}>
-                    <Modal  onClick={togglePopup} >
-                        <OrderDetails />
-                    </Modal>
-                </ModalOverlay>
+                <Modal  onClick={togglePopup} >
+                    <OrderDetails />
+                </Modal>
             }
         </>
     );

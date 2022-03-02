@@ -1,6 +1,6 @@
 import PropTypes, {arrayOf} from 'prop-types'
 
-export const objProp = PropTypes.shape({
+export const productProp = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -18,5 +18,5 @@ export const objProp = PropTypes.shape({
 export const categoryProp = PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
     typeName: PropTypes.string.isRequired,
-    ingredients: arrayOf(objProp).isRequired
+    ingredients: arrayOf(productProp).isRequired
 }))

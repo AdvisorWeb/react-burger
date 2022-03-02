@@ -1,19 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 
 import styles from './styles.module.css'
 
-
-const modalRoot = document.getElementById("react-modals");
-
 function ModalOverlay({children, onClick}) {
-    return ReactDOM.createPortal(
+    return (
         <div
             className={styles.overlay}
             onClick={onClick}
-        >{children}</div>,
-        modalRoot
-
+        >{children}</div>
     );
 }
 

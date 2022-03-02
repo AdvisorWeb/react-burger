@@ -4,7 +4,7 @@ import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredie
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
 
 import PropTypes from 'prop-types'
-import {objProp} from '../../utils/variablePropType.js'
+import {productProp} from '../../utils/variablePropType.js'
 
 import styles from './home.module.css'
 
@@ -46,7 +46,7 @@ function Home({ingredients}) {
 }
 
 Home.propTypes = {
-    ingredients: PropTypes.arrayOf(objProp).isRequired
+    ingredients: PropTypes.arrayOf(productProp).isRequired
 };
 
 export default Home;
