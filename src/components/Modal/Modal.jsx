@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom'
 
+
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {modalRoot} from '../../utils/consts'
 
 import styles from './styles.module.css'
 
-function Modal({name = false, onClick, children, setIsPopup}) {
 
+function Modal({name = false, onClick, children, setIsPopup}) {
+    const modalRoot = document.getElementById("react-modals");
     const closePopup = (event) => {
         const key = event.keyCode
         key === 27 && setIsPopup(false)
