@@ -4,6 +4,7 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 import {productProp} from '../../utils/variablePropType.js'
 
 import styles from './style.module.css'
+import PropTypes from "prop-types";
 
 function CardIngredient({card, onClick}) {
     return (
@@ -22,7 +23,8 @@ function CardIngredient({card, onClick}) {
 }
 
 CardIngredient.propTypes = {
-    card: productProp.isRequired
+    card: productProp.isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 export default CardIngredient;

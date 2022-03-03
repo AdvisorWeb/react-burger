@@ -1,6 +1,8 @@
 import React from 'react';
 
 import styles from "./styles.module.css";
+import {productProp} from "../../utils/variablePropType";
+
 
 function IngredientDetails({cardSelected}) {
     return (
@@ -39,5 +41,9 @@ function IngredientDetails({cardSelected}) {
         </div>
     );
 }
+
+IngredientDetails.propTypes = {
+    cardSelected: productProp.isRequired,
+};
 
 export default IngredientDetails;

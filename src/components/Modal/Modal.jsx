@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom'
 
-
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
 
 import styles from './styles.module.css'
-
 
 function Modal({name = false, onClick, children, setIsPopup}) {
     const modalRoot = document.getElementById("react-modals");
@@ -46,5 +45,13 @@ function Modal({name = false, onClick, children, setIsPopup}) {
         modalRoot
     );
 }
+
+Modal.propTypes = {
+    name: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
+    setIsPopup: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
+
+};
 
 export default Modal;
