@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
 import CardIngredient from '../CardIngredient/CardIngredient'
 import Modal from "../Modal/Modal";
@@ -7,24 +8,75 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import {Scrollbar} from 'smooth-scrollbar-react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
-import {categoryProp} from '../../utils/variablePropType.js'
+
+import {ADD_OBJ_MODAL, REMOVE_OBJ_MODAL} from '../../services/actions/modalAction'
 
 import styles from './styles.module.css'
 
-function BurgerIngredients({category, initScroll}) {
-    const [current, setCurrent] = React.useState(category[0].type)
-    const scrollContainer = React.useRef(null);
-    const [isPopup, setIsPopup] = useState(false)
-    const [cardSelected, setCardSelected] = useState(null)
+const BurgerIngredients = ({initScroll}) => {
+    const dispatch = useDispatch()
 
+    const [currentTab, setCurrentTab] = React.useState(null)
+    const [isPopup, setIsPopup] = useState(false)
+
+    const scrollContainer = React.useRef(null);
+
+    const {items} = useSelector(store => store.info)
+
+    const category = useMemo(
+        () => {
+            return [
+                {
+                    type: "bun",
+                    typeName: 'Булки',
+                    items: items.filter(item => item.type === "bun")
+                },
+                {
+                    type: "main",
+                    typeName: 'Основное',
+                    items: items.filter(item => item.type === "main")
+                },
+                {
+                    type: "sauce",
+                    typeName: 'Соусы',
+                    items: items.filter(item => item.type === "sauce")
+                }
+            ]
+        }, [items]
+    )
     const togglePopup = (card) => {
-        card && setCardSelected(card)
+        card && dispatch({type: ADD_OBJ_MODAL, card})
+        isPopup && dispatch({type: REMOVE_OBJ_MODAL})
         setIsPopup(!isPopup)
     }
 
+    const scrollWrapper = useRef(null)
+
+    const tabScrollEvent = () => {
+        const categoryWrapper = [...document.querySelectorAll('[data-anchor]')]
+        const offsetTopWrapper = scrollWrapper.current.offset.y + 250
+        categoryWrapper.forEach(item => {
+            const offsetTopItem = item.offsetTop
+            const offsetBotItem = item.getBoundingClientRect().height + offsetTopItem
+            const itemType = item.getAttribute('data-anchor')
+            if (offsetTopWrapper > offsetTopItem && offsetBotItem > offsetTopWrapper) {
+                setCurrentTab(itemType)
+            }
+        })
+    }
+
+    const tabScrollControl = useCallback(
+        (type) =>() =>{
+            setCurrentTab(type)
+            scrollWrapper.current.scrollTop = document.querySelector(`[data-anchor=${type}]`).offsetTop
+        },[currentTab]
+    )
+
     useEffect(() => {
         initScroll(scrollContainer.current)
-    });
+        tabScrollEvent()
+        tabScrollControl()
+    }, []);
 
     return (
         <>
@@ -38,8 +90,8 @@ function BurgerIngredients({category, initScroll}) {
                             <Tab
                                 key={`${item.type}-${index}`}
                                 value={item.type}
-                                active={current === item.type}
-                                onClick={setCurrent}
+                                active={currentTab === item.type}
+                                onClick={tabScrollControl(item.type)}
                             >
                                 {item.typeName}
                             </Tab>
@@ -50,45 +102,49 @@ function BurgerIngredients({category, initScroll}) {
                     <Scrollbar
                         style={{height: '100%'}}
                         className={'pr-2 pl-2'}
+                        onScroll={(e) => tabScrollEvent(e)}
+                        ref={scrollWrapper}
                         plugins={{
                             overscroll: {
                                 effect: 'bounce',
                             },
                         }}>
                         {
-                            category.map((item) =>
-                                <div
-                                    key={`${item.type}-${item.typeName}`}
-                                    style={{width: '100%'}}
-                                    className={`${styles.categories} pb-2`}
-                                    data-anchor={item.type}
-                                >
-                                    <h3
-                                        className={`${styles.categoryTitle} text text_type_main-medium mb-6`}
-                                        key={item.typeName}
+                            category.map(item => {
+                                return (
+                                    <div
                                         style={{width: '100%'}}
+                                        className={`${styles.categories} pb-2`}
+                                        data-anchor={item.type}
+                                        key={`${item.type}-${item.typeName}`}
                                     >
-                                        {item.typeName}
-                                    </h3>
-                                    {
-                                        item.ingredients.map((card) =>
-                                            <CardIngredient
-                                                card={card}
-                                                key={card._id}
-                                                cardSelected={cardSelected}
-                                                onClick={togglePopup}/>
-                                        )
-                                    }
-                                </div>
-                            )
+
+                                        <h3
+                                            className={`${styles.categoryTitle} text text_type_main-medium mb-6`}
+                                            style={{width: '100%'}}
+                                        >
+                                            {item.typeName}
+                                        </h3>
+                                        {
+                                            item.items.map((card) =>
+                                                <CardIngredient
+                                                    type={item.type}
+                                                    card={card}
+                                                    key={card._id}
+                                                    onClick={togglePopup}/>
+                                            )
+                                        }
+                                    </div>
+                                )
+                            })
                         }
                     </Scrollbar>
                 </div>
             </div>
             {
-                isPopup && cardSelected &&
+                isPopup &&
                 <Modal name={'Детали ингредиента'} onClick={togglePopup} setIsPopup={setIsPopup}>
-                    <IngredientDetails cardSelected={cardSelected}/>
+                    <IngredientDetails/>
                 </Modal>
             }
         </>
@@ -97,7 +153,6 @@ function BurgerIngredients({category, initScroll}) {
 
 BurgerIngredients.propTypes = {
     initScroll: PropTypes.func.isRequired,
-    category: categoryProp.isRequired
 };
 
 export default BurgerIngredients;

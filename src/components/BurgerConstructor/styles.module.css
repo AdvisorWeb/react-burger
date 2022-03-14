@@ -32,6 +32,23 @@
     cursor: grabbing;
 }
 
+.emptyBasket{
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    position: relative;
+}
+.emptyBasket::before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--offset-base-size) * 10);
+    height: calc(var(--offset-base-size) * 10);
+    background-image: url(../../images/drag.svg);
+    background-size: contain;
+    opacity: .5;
+}
 
 .constructorElement{
     display: flex;

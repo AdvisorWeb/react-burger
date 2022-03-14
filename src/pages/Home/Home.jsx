@@ -1,14 +1,13 @@
 import React from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
 
-import PropTypes from 'prop-types'
-import {productProp} from '../../utils/variablePropType.js'
-
 import styles from './home.module.css'
 
-function Home({ingredients}) {
+function Home() {
     const initScroll = (scrollContainer, negativeItems = false) => {
         setTimeout(() => {
             if (scrollContainer) {
@@ -20,33 +19,14 @@ function Home({ingredients}) {
             }
         }, 0)
     }
-    const typeTranslate = (type) => {
-        if (type === 'bun') {
-            return 'Булка'
-        } else if (type === 'sauce') {
-            return 'Соус'
-        } else if (type === 'main') {
-            return 'Начинки'
-        }
-    }
-    const categoryType = [...new Set(ingredients.map(item => item.type))].map(item => {
-        return {
-            type: item,
-            typeName: typeTranslate(item),
-            ingredients: ingredients.filter(a => a.type === item)
-        }
-    })
 
     return (
         <div className={`${styles.home} pb-10`}>
-            <BurgerIngredients category={categoryType} initScroll={initScroll}/>
-            <BurgerConstructor initScroll={initScroll} category={categoryType}/>
+            <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients  initScroll={initScroll}/>
+                <BurgerConstructor initScroll={initScroll} />
+            </DndProvider>
         </div>
     )
 }
-
-Home.propTypes = {
-    ingredients: PropTypes.arrayOf(productProp).isRequired
-};
-
 export default Home;

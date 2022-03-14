@@ -1,4 +1,5 @@
 import React from 'react';
+import {useDrag} from "react-dnd";
 
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import {productProp} from '../../utils/variablePropType.js'
@@ -6,10 +7,23 @@ import {productProp} from '../../utils/variablePropType.js'
 import styles from './style.module.css'
 import PropTypes from "prop-types";
 
-function CardIngredient({card, onClick}) {
+const CardIngredient = ({card, onClick}) => {
+    const [{ opacity }, dragRef] = useDrag({
+        type: 'items',
+        item: { card },
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.5 : 1,
+        }),
+    });
+
     return (
-        <div className={`${styles.item} mb-8`} onClick={()=> onClick(card)}>
-            {card.__v !== 0 && <Counter count={card.__v} size="default"/>}
+        <div
+            ref={dragRef}
+            style={{ opacity }}
+            className={`${styles.item} mb-8`}
+            onClick={()=> onClick(card)}>
+
+            {card.count !== 0 && <Counter count={card.count} size="default"/>}
             <div className={`${styles.img} pb-1 pl-4 pr-4`}>
                 <img src={card.image} alt=""/>
             </div>

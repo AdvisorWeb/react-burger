@@ -1,0 +1,4 @@
+export const ADD_OBJ_MODAL = 'ADD_OBJ_MODAL'
+export const REMOVE_OBJ_MODAL = 'REMOVE_OBJ_MODAL'
+
+

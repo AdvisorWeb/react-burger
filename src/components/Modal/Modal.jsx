@@ -3,22 +3,23 @@ import ReactDOM from 'react-dom'
 
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import PropTypes from 'prop-types'
 
 import styles from './styles.module.css'
 
-function Modal({name = false, onClick, children, setIsPopup}) {
+const Modal = ({name = false, onClick, children, setIsPopup}) => {
     const modalRoot = document.getElementById("react-modals");
     const closePopup = (event) => {
         const key = event.keyCode
         key === 27 && setIsPopup(false)
     }
-    const stopPropagation  = (e) => {
+    const stopPropagation = (e) => {
         e.stopPropagation()
     }
 
     useEffect(
-        ()=> {
+        () => {
             window.addEventListener('keydown', closePopup)
             return () => window.removeEventListener('keydown', closePopup)
         }
@@ -35,7 +36,7 @@ function Modal({name = false, onClick, children, setIsPopup}) {
                 }
 
                 <div className={styles.modalClose} onClick={onClick}>
-                    <CloseIcon type="primary" />
+                    <CloseIcon type="primary"/>
                 </div>
 
                 {children}

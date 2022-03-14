@@ -1,4 +1,4 @@
-import PropTypes, {arrayOf} from 'prop-types'
+import PropTypes from 'prop-types'
 
 export const productProp = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -12,11 +12,6 @@ export const productProp = PropTypes.shape({
     image: PropTypes.string.isRequired,
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
     __v: PropTypes.number.isRequired
 });
-
-export const categoryProp = PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    typeName: PropTypes.string.isRequired,
-    ingredients: arrayOf(productProp).isRequired
-}))
