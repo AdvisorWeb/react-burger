@@ -33,7 +33,7 @@ const BurgerIngredients = ({initScroll}) => {
                 },
                 {
                     type: "main",
-                    typeName: 'Основное',
+                    typeName: 'Начинки',
                     items: items.filter(item => item.type === "main")
                 },
                 {
@@ -69,14 +69,14 @@ const BurgerIngredients = ({initScroll}) => {
         (type) =>() =>{
             setCurrentTab(type)
             scrollWrapper.current.scrollTop = document.querySelector(`[data-anchor=${type}]`).offsetTop
-        },[currentTab]
+        },[]
     )
 
     useEffect(() => {
         initScroll(scrollContainer.current)
         tabScrollEvent()
         tabScrollControl()
-    }, []);
+    }, [tabScrollControl, initScroll]);
 
     return (
         <>
@@ -100,8 +100,7 @@ const BurgerIngredients = ({initScroll}) => {
                 </div>
                 <div className={`${styles.list} scrollContainer`} ref={scrollContainer}>
                     <Scrollbar
-                        style={{height: '100%'}}
-                        className={'pr-2 pl-2'}
+                        className={`${styles.h100} pr-2 pl-2`}
                         onScroll={(e) => tabScrollEvent(e)}
                         ref={scrollWrapper}
                         plugins={{
@@ -113,7 +112,6 @@ const BurgerIngredients = ({initScroll}) => {
                             category.map(item => {
                                 return (
                                     <div
-                                        style={{width: '100%'}}
                                         className={`${styles.categories} pb-2`}
                                         data-anchor={item.type}
                                         key={`${item.type}-${item.typeName}`}
@@ -121,7 +119,6 @@ const BurgerIngredients = ({initScroll}) => {
 
                                         <h3
                                             className={`${styles.categoryTitle} text text_type_main-medium mb-6`}
-                                            style={{width: '100%'}}
                                         >
                                             {item.typeName}
                                         </h3>

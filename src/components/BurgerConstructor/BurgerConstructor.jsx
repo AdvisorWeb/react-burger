@@ -6,6 +6,7 @@ import {useDrop} from 'react-dnd';
 import {Button, CurrencyIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Scrollbar} from 'smooth-scrollbar-react';
 import PropTypes from "prop-types";
+
 import BurgerConstructorDraggable from '../BurgerConstructorDraggable/BurgerConstructorDraggable.jsx'
 
 import Modal from "../Modal/Modal";
@@ -14,15 +15,12 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import styles from './styles.module.css'
 
 import {
-    ADD_ITEM_BUN,
-    ADD_ITEM_OTHER,
     MOVE_ITEM,
     REMOVE_ITEM,
-    REFRESH_ITEMS
+    REFRESH_ITEMS,
+    addItemConstructor
 } from '../../services/actions/constructorAction'
 import {
-    ADD_ITEMS_BUN_COUNT,
-    ADD_ITEMS_OTHER_COUNT,
     REMOVE_ITEMS_COUNT,
     REFRESH_ITEMS_COUNT
 } from '../../services/actions/mainInfoAction'
@@ -39,13 +37,7 @@ const BurgerConstructor = ({initScroll}) => {
     const [, dropTarget] = useDrop({
         accept: 'items',
         drop({card}) {
-            if (card.type === 'bun') {
-                dispatch({type: ADD_ITEM_BUN, card})
-                dispatch({type: ADD_ITEMS_BUN_COUNT, card})
-            } else {
-                dispatch({type: ADD_ITEM_OTHER, card})
-                dispatch({type: ADD_ITEMS_OTHER_COUNT, card})
-            }
+            dispatch(addItemConstructor(card))
         },
     });
 
@@ -127,11 +119,10 @@ const BurgerConstructor = ({initScroll}) => {
                     </div>
                     <div
                         ref={scrollContainer}
-                        style={{marginRight: '-16px'}}
+                        className={styles.marginMinus}
                     >
                         <Scrollbar
-                            style={{height: '100%'}}
-                            className={`${styles.centerWrp} pr-2`}
+                            className={`${styles.centerWrp} ${styles.h100} pr-2`}
                             plugins={{
                                 overscroll: {
                                     effect: 'bounce',

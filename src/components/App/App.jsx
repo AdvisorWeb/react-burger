@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import AppHeader from "../AppHeader/AppHeader";
 import { Home } from "../../pages/index";
@@ -7,6 +7,8 @@ import {getItems} from '../../services/actions/mainInfoAction'
 
 import {Loader} from '../Loader/Loader'
 
+import styles from './style.module.css'
+
 const App = () => {
     const dispatch = useDispatch()
     const {isLoading, itemsFailed} = useSelector(store => store.info)
@@ -14,7 +16,7 @@ const App = () => {
     useEffect(
         ()=>{
             dispatch(getItems())
-        },[]
+        },[dispatch]
     )
 
     return (
@@ -23,7 +25,7 @@ const App = () => {
             <main className={'container'}>
                 {
                     itemsFailed
-                        ? <p  style={{ padding: '50px', textAlign: 'center' }} >Произошла ошибка или проблемы с интернетами</p>
+                        ? <p  className={styles.error} >Произошла ошибка или проблемы с интернетами</p>
                         :  !isLoading ? <Home /> : <Loader />
 
                 }

@@ -75,7 +75,6 @@ export const mainInfoReducer = (state = initialState, action) => {
             };
         }
         case REFRESH_ITEMS_COUNT: {
-            console.log('dsad')
             return {
                 ...state,
                 items: state.items.map(item => {

@@ -55,3 +55,10 @@
     align-items: center;
     position: relative;
 }
+
+.marginMinus{
+    margin-right: -16px;
+}
+.h100{
+    height: 100%;
+}

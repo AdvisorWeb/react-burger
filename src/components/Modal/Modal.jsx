@@ -11,8 +11,8 @@ import styles from './styles.module.css'
 const Modal = ({name = false, onClick, children, setIsPopup}) => {
     const modalRoot = document.getElementById("react-modals");
     const closePopup = (event) => {
-        const key = event.keyCode
-        key === 27 && setIsPopup(false)
+        const key = event.key
+        key  === 'Escape' && setIsPopup(false)
     }
     const stopPropagation = (e) => {
         e.stopPropagation()

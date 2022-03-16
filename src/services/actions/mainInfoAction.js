@@ -1,4 +1,4 @@
-import {url} from "../../utils/consts";
+import {baseUrl, checkResponse} from "../../utils/consts";
 
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST'
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
@@ -10,20 +10,23 @@ export const REMOVE_ITEMS_COUNT = 'REMOVE_ITEMS_COUNT'
 export const REFRESH_ITEMS_COUNT = 'REFRESH_ITEMS_COUNT'
 
 
+
+
 export function getItems() {
     return function (dispatch) {
         dispatch({
             type: GET_ITEMS_REQUEST
         });
-        fetch(url)
-            .then(res => res.json())
+        fetch(`${baseUrl}/ingredients`)
+            .then(checkResponse)
             .then(data => {
                 dispatch({
                     type: GET_ITEMS_SUCCESS,
                     items: data.data
                 });
             })
-            .catch(e => {
+            .catch(error => {
+                console.log(error)
                 dispatch({
                     type: GET_ITEMS_FAILED
                 });

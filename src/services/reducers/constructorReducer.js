@@ -6,8 +6,6 @@ import {
     REFRESH_ITEMS,
 } from '../actions/constructorAction'
 
-import {v4 as uuidv4} from 'uuid';
-
 const initialState = {
     'bun' : [],
     'other' : [],
@@ -18,23 +16,19 @@ export const itemsConstructor = (state = initialState, action) => {
         case ADD_ITEM_BUN: {
             return {
                 ...state,
-                'bun':  [{
-                    ...action.card,
-                    key: uuidv4(),
-                    count: 2
-                }]
+                'bun':  [{...action.payload.card }]
             };
         }
         case ADD_ITEM_OTHER: {
             return {
                 ...state,
-                'other': [...state.other, {...action.card, key: uuidv4()}]
+                'other': [...state.other, {...action.payload.card}]
             };
         }
         case REMOVE_ITEM: {
             return {
                 ...state,
-                'other': state.other.filter((item) => item.key != action.key)
+                'other': state.other.filter((item) => item.key !== action.key)
             };
         }
         case MOVE_ITEM: {

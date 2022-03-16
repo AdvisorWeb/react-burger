@@ -1,4 +1,4 @@
-import {urlPost} from "../../utils/consts";
+import {baseUrl, checkResponse} from "../../utils/consts";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST'
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS'
@@ -10,16 +10,16 @@ export function getOrder({order}) {
         dispatch({
             type: GET_ORDER_REQUEST
         });
-        fetch(`${urlPost}/${order}`)
-            .then(res => res.json())
+        fetch(`${baseUrl}/orders/${order}`)
+            .then(checkResponse)
             .then(data => {
-                console.log(data)
                 dispatch({
                     type: GET_ORDER_SUCCESS,
                     answer: data
                 });
             })
-            .catch(e => {
+            .catch(error => {
+                console.log(error)
                 dispatch({
                     type: GET_ORDER_FAILED
                 });
