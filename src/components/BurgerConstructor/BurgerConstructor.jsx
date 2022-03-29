@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState, useCallback} from 'react';
 
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from 'react-dnd';
+import {Redirect} from 'react-router-dom'
 
 import {Button, CurrencyIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Scrollbar} from 'smooth-scrollbar-react';
@@ -33,6 +34,9 @@ const BurgerConstructor = ({initScroll}) => {
     const negativeItems = React.useRef([]);
     const [isPopup, setIsPopup] = useState(false)
     const constructorItems = useSelector(state => state.constructorItems)
+    const {authorization} = useSelector(state => state.authState)
+
+    const [redirectTo, setRedirectTo] = useState(false)
 
     const [, dropTarget] = useDrop({
         accept: 'items',
@@ -61,13 +65,15 @@ const BurgerConstructor = ({initScroll}) => {
         dispatch(getOrder(postRequest))
     }
 
-    const togglePopup = useCallback(
-        () => {
+    const togglePopup = () => {
+        if (authorization) {
             setIsPopup(!isPopup)
             isPopup && dispatch({type: REFRESH_ITEMS})
             isPopup && dispatch({type: REFRESH_ITEMS_COUNT})
-        }, [isPopup, dispatch]
-    )
+        } else {
+            setRedirectTo(true)
+        }
+    }
 
     const basketItemsConcat = useMemo(
         () => {
@@ -96,6 +102,14 @@ const BurgerConstructor = ({initScroll}) => {
             initScroll(scrollContainer.current, negativeItems.current)
         }, 0)
     })
+
+    if(redirectTo){
+        return <Redirect
+            to={{
+                pathname: "/login",
+            }}
+        />
+    }
 
     return (
         <>

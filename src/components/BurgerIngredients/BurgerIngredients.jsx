@@ -1,5 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {
+    Link,
+    useLocation,
+} from "react-router-dom";
 
 import CardIngredient from '../CardIngredient/CardIngredient'
 import Modal from "../Modal/Modal";
@@ -9,12 +13,11 @@ import {Scrollbar} from 'smooth-scrollbar-react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
 
-import {ADD_OBJ_MODAL, REMOVE_OBJ_MODAL} from '../../services/actions/modalAction'
-
 import styles from './styles.module.css'
 
 const BurgerIngredients = ({initScroll}) => {
     const dispatch = useDispatch()
+
 
     const [currentTab, setCurrentTab] = React.useState(null)
     const [isPopup, setIsPopup] = useState(false)
@@ -44,11 +47,6 @@ const BurgerIngredients = ({initScroll}) => {
             ]
         }, [items]
     )
-    const togglePopup = (card) => {
-        card && dispatch({type: ADD_OBJ_MODAL, card})
-        isPopup && dispatch({type: REMOVE_OBJ_MODAL})
-        setIsPopup(!isPopup)
-    }
 
     const scrollWrapper = useRef(null)
 
@@ -66,10 +64,10 @@ const BurgerIngredients = ({initScroll}) => {
     }
 
     const tabScrollControl = useCallback(
-        (type) =>() =>{
+        (type) => () => {
             setCurrentTab(type)
             scrollWrapper.current.scrollTop = document.querySelector(`[data-anchor=${type}]`).offsetTop
-        },[]
+        }, []
     )
 
     useEffect(() => {
@@ -116,7 +114,6 @@ const BurgerIngredients = ({initScroll}) => {
                                         data-anchor={item.type}
                                         key={`${item.type}-${item.typeName}`}
                                     >
-
                                         <h3
                                             className={`${styles.categoryTitle} text text_type_main-medium mb-6`}
                                         >
@@ -128,7 +125,7 @@ const BurgerIngredients = ({initScroll}) => {
                                                     type={item.type}
                                                     card={card}
                                                     key={card._id}
-                                                    onClick={togglePopup}/>
+                                                  />
                                             )
                                         }
                                     </div>
@@ -138,12 +135,6 @@ const BurgerIngredients = ({initScroll}) => {
                     </Scrollbar>
                 </div>
             </div>
-            {
-                isPopup &&
-                <Modal name={'Детали ингредиента'} onClick={togglePopup} setIsPopup={setIsPopup}>
-                    <IngredientDetails/>
-                </Modal>
-            }
         </>
     );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink, Link} from 'react-router-dom';
 
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -10,23 +11,32 @@ const AppHeader = () => {
             <div className="container">
                 <div className={styles.wrp}>
                     <nav>
-                        <a className={'pt-4 pb-4 pl-5 pr-5 mr-2 text text_type_main-default ' + styles.link} href={'#'}>
-                            <BurgerIcon type="primary" size="medium"/>
-                            <span className={'pl-2'} style={{color: '#fff'}}>Конструктор</span>
-                        </a>
+                        <NavLink
+                            to={'/'}
+                            exact
+                            className={`pt-4 pb-4 pl-5 pr-5 mr-2 text text_type_main-default ${styles.link}`}
+                            activeClassName={styles.linkActive}
+                        >
+                            <BurgerIcon type="secondary" size="medium"/>
+                            <span className={'pl-2 text_color_inactive'}>Конструктор</span>
+                        </NavLink>
                         <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link} href={'#'}>
                             <ListIcon type="secondary" size="medium"/>
                             <span className={'pl-2 text_color_inactive'}>Лента заказов</span>
                         </a>
                     </nav>
-                    <a href="/" className={styles.logo}>
+                    <Link to="/" className={styles.logo}>
                         <Logo/>
-                    </a>
+                    </Link>
                     <nav>
-                        <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link} href={'#'}>
+                        <NavLink
+                            className={`pt-4 pb-4 pl-5 pr-5 text text_type_main-default ${styles.link}`}
+                            to={'/profile'}
+                            activeClassName={styles.linkActive}
+                        >
                             <ProfileIcon type="secondary" size="medium"/>
                             <span className={'pl-2 text_color_inactive'}>Личный кабинет</span>
-                        </a>
+                        </NavLink>
                     </nav>
                 </div>
             </div>

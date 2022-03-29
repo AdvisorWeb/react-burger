@@ -9,6 +9,16 @@
     text-decoration: none;
     color: inherit;
 }
+.linkActive span{
+    color: #fff!important;
+}
+
+.linkActive svg{
+   fill: #fff !important;
+}
+.link._active svg{
+    fill: #fff !important;
+}
 .link:active{
     transform: translateY(2px);
 }

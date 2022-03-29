@@ -1,6 +1,15 @@
 .modalImg {
     width: 100%;
 }
+.wrp{
+    max-width: 640px;
+    margin: 0 auto;
+}
+.zag{
+    text-align: center;
+    display: block;
+    padding-top: 120px;
+}
 
 .modalName {
     text-align: center;

@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import {mainInfoReducer} from './mainInfoReducer'
-import {getObjectModal} from './modalReducer'
 import {itemsConstructor} from './constructorReducer'
 import {orderReducer} from './orderReducer'
+import {authReducer} from './authReducer'
 
 
 export const rootReducer = combineReducers({
     info: mainInfoReducer,
-    modal: getObjectModal,
     constructorItems: itemsConstructor,
-    order: orderReducer
+    order: orderReducer,
+    authState: authReducer
 })

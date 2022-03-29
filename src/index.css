@@ -177,3 +177,41 @@ body .constructor-element{
     max-width: calc(100% - 32px);
     margin-left: 32px;
 }
+
+.form{
+    text-align: center;
+    padding: 180px 0 100px;
+    max-width: 480px;
+    margin:  0 auto;
+}
+.input__container,
+.input{
+    width: 100% !important;
+}
+.input__icon{
+    cursor: pointer!important;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+body{
+    height: 100vh;
+    overflow: hidden;
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+}
+li{
+    list-style: none;
+}
+
+.errorMessage{
+    text-align: center;
+    color: red;
+    padding: 8px 0;
+    display: inline-flex;
+}

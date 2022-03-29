@@ -8,11 +8,11 @@ import PropTypes from 'prop-types'
 
 import styles from './styles.module.css'
 
-const Modal = ({name = false, onClick, children, setIsPopup}) => {
+const Modal = ({name = false, onClick, children}) => {
     const modalRoot = document.getElementById("react-modals");
     const closePopup = (event) => {
         const key = event.key
-        key  === 'Escape' && setIsPopup(false)
+        key  === 'Escape' && onClick()
     }
     const stopPropagation = (e) => {
         e.stopPropagation()
@@ -50,7 +50,6 @@ const Modal = ({name = false, onClick, children, setIsPopup}) => {
 Modal.propTypes = {
     name: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    setIsPopup: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired
 
 };

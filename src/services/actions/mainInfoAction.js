@@ -9,9 +9,6 @@ export const ADD_ITEMS_BUN_COUNT = 'ADD_ITEMS_BUN_COUNT'
 export const REMOVE_ITEMS_COUNT = 'REMOVE_ITEMS_COUNT'
 export const REFRESH_ITEMS_COUNT = 'REFRESH_ITEMS_COUNT'
 
-
-
-
 export function getItems() {
     return function (dispatch) {
         dispatch({

@@ -5,7 +5,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
 
-import styles from './home.module.css'
+import styles from './styles.module.css'
 
 function Home() {
     const initScroll = (scrollContainer, negativeItems = false) => {
