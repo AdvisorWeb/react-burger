@@ -100,7 +100,7 @@ export const resetPassword = (form) => {
 }
 
 export const patсhInfo = async (form) => {
-    return await fetch(`${baseUrl}/auth/user/`, {
+     return await fetch(`${baseUrl}/auth/user/`, {
         method: 'PATCH',
         mode: 'cors',
         cache: 'no-cache',

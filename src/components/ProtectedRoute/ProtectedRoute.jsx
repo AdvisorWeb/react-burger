@@ -1,11 +1,9 @@
 import React from 'react';
-import {Redirect, Route, useLocation} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import {useSelector} from "react-redux";
 
 export const ProtectedRoute = ({children, ...rest}) => {
-    const location = useLocation();
     const {authorization, authorizationCheck} = useSelector(state => state.authState)
-    const profilePath = rest.path === '/profile'
 
    const toPath = (rest) => {
       if( rest.location.state){

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, Redirect, useLocation} from "react-router-dom";
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import {logOut, getUser, refreshInfo} from "../../services/actions/authAction";
+import {logOut, getUser, refreshInfo, refreshToken} from "../../services/actions/authAction";
 import Loader from "../../components/Loader/Loader";
 
 import styles from './styles.module.css'
@@ -12,8 +12,8 @@ import {errorProcessing} from "../../utils/consts";
 const Profile = () => {
     const location = useLocation();
     const dispatch = useDispatch()
-    const {request, user, error, errorMessage} = useSelector(state => state.authState.auth)
-    const {authorization, authorizationCheck} = useSelector(state => state.authState)
+    const {request, user} = useSelector(state => state.authState.auth)
+    const {authorization, authorizationCheck, cookies} = useSelector(state => state.authState)
 
     const [edit, setEdit] = useState(false)
     const [form, setForm] = useState({
@@ -59,15 +59,14 @@ const Profile = () => {
 
     const submitForm = (e) => {
         e.preventDefault()
-
         setForm({
             ...form,
             email: user.email,
             name: user.name,
         })
         dispatch(refreshInfo(form))
-
     }
+
 
     useEffect(
         () => {
@@ -78,7 +77,7 @@ const Profile = () => {
                 name: user.name,
             })
 
-        }, []
+        }, [authorizationCheck]
     )
     useEffect(
         () => {
@@ -94,27 +93,26 @@ const Profile = () => {
                 name: user.name,
             })
 
-        },[request]
+        }, [request]
     )
 
-    if(authorizationCheck && !authorization){
+    if (authorizationCheck && !authorization) {
         return (
             <Redirect
                 to={{
                     pathname: '/login',
-                    state: { from: location }
+                    state: {from: location}
                 }}
             />
         )
     }
 
 
-
-
     return (
         request
             ? <Loader/>
-            : <div className={`${styles.profileWrp}`}>
+            : cookies
+            ? <div className={`${styles.profileWrp}`}>
                 <div className={`${styles.sidebar} mr-15`}>
                     <ul className={'mb-20'}>
                         <li className={styles.li}>
@@ -150,7 +148,6 @@ const Profile = () => {
                     </div>
                 </div>
                 <form action="" className={`${styles.form}`} onSubmit={submitForm}>
-                    {error && errorProcessing(errorMessage)}
                     <div className={`mb-6`}>
                         <Input
                             type={'text'}
@@ -212,6 +209,8 @@ const Profile = () => {
                     }
                 </form>
             </div>
+            : <Loader/>
+
     );
 }
 

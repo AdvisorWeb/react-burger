@@ -36,6 +36,7 @@ import {
 const initialState = {
     "authorization" : false,
     "authorizationCheck" : false,
+    "cookies" : false,
     'auth' : {
         'request': false,
         'error': false,
@@ -165,6 +166,7 @@ export const authReducer = (state = initialState, action) => {
                     ...state.auth,
                     "request": true,
                     'error': false,
+                    'errorMessage': '',
                 }
             };
         }
@@ -176,6 +178,7 @@ export const authReducer = (state = initialState, action) => {
                     ...state.auth,
                     "request": false,
                     'error': false,
+                    'errorMessage': '',
                     user
                 }
             }
@@ -234,6 +237,7 @@ export const authReducer = (state = initialState, action) => {
         case REFRESH_COOKIES_REQUEST: {
             return {
                 ...state,
+                "cookies" : false,
                 'auth' : {
                     ...state.auth,
                     'request': true,
@@ -246,6 +250,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 "authorization" : true,
                 "authorizationCheck" : true,
+                "cookies" : true,
                 'auth' : {
                     ...state.auth,
                     'request': false,
@@ -258,6 +263,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 "authorizationCheck" : true,
+                "cookies" : false,
                auth: {
                     ...state.auth,
                    'request': false,

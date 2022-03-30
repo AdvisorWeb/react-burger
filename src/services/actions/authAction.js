@@ -106,7 +106,9 @@ export const getUser = () => {
                 });
             })
             .catch(error => {
-                console.log(error)
+                if(error === 'Ошибка 403'){
+                  dispatch(refreshToken())
+                }
                 dispatch({
                     type: GET_USER_ERROR,
                     error
@@ -129,7 +131,9 @@ export const refreshInfo = form => {
                 });
             })
             .catch(error => {
-                console.log(error)
+                if(error === 'Ошибка 403'){
+                   dispatch( refreshToken(form))
+                }
                 dispatch({
                     type: REFRESH_USER_ERROR,
                     error
@@ -162,7 +166,7 @@ export const logOut = () => {
     };
 };
 
-export const refreshToken = () => {
+export const refreshToken = (form = null) => {
     return function (dispatch) {
         dispatch({
             type: REFRESH_COOKIES_REQUEST
@@ -177,6 +181,9 @@ export const refreshToken = () => {
                     accessToken,
                     refreshToken
                 });
+            })
+            .then(() => {
+                form && dispatch(refreshInfo(form))
             })
             .catch(error => {
                 console.log(error)
