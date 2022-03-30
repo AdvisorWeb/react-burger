@@ -41,7 +41,7 @@ const Login = () => {
     return (
         request
             ? <Loader />
-            :  <div>
+            : <div>
                 <form className={'form'} onSubmit={submitForm}>
                     <div className={`text text_type_main-medium mb-6`}>Вход</div>
                     {error && errorProcessing(errorMessage)}

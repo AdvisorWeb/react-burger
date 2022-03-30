@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect, useLocation} from "react-router-dom";
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import {logOut, getUser, refreshInfo} from "../../services/actions/authAction";
@@ -10,8 +10,10 @@ import styles from './styles.module.css'
 import {errorProcessing} from "../../utils/consts";
 
 const Profile = () => {
+    const location = useLocation();
     const dispatch = useDispatch()
     const {request, user, error, errorMessage} = useSelector(state => state.authState.auth)
+    const {authorization, authorizationCheck} = useSelector(state => state.authState)
 
     const [edit, setEdit] = useState(false)
     const [form, setForm] = useState({
@@ -69,12 +71,13 @@ const Profile = () => {
 
     useEffect(
         () => {
-            dispatch(getUser())
+            authorizationCheck && authorization && dispatch(getUser())
             setForm({
                 ...form,
                 email: user.email,
                 name: user.name,
             })
+
         }, []
     )
     useEffect(
@@ -93,6 +96,20 @@ const Profile = () => {
 
         },[request]
     )
+
+    if(authorizationCheck && !authorization){
+        return (
+            <Redirect
+                to={{
+                    pathname: '/login',
+                    state: { from: location }
+                }}
+            />
+        )
+    }
+
+
+
 
     return (
         request

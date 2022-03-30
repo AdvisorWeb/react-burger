@@ -56,9 +56,16 @@ const App = () => {
                     <ProtectedRoute path="/reset-password" exact={true}>
                         <ResetPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true} toPath={'/login'}>
+                    {/*<ProtectedRoute path="/profile" exact={true} toPath={'/login'}>*/}
+                    {/*    <Profile/>*/}
+                    {/*</ProtectedRoute>*/}
+
+                    <Route
+                        path="/profile"
+                        exact={true}
+                    >
                         <Profile/>
-                    </ProtectedRoute>
+                    </Route>
                     <Route path='/ingredients/:ingredientId' exact>
                         <IngredientDetails inPage={true}/>
                     </Route>

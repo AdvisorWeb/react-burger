@@ -6,7 +6,7 @@ import {
     refreshTokenRequest,
     forgotPassword,
     getUserInfo,
-    pathInfo,
+    patсhInfo,
     cookiesProcessing,
     resetPassword
 
@@ -120,7 +120,7 @@ export const refreshInfo = form => {
         dispatch({
             type: REFRESH_USER_REQUEST
         });
-        pathInfo(form)
+        patсhInfo(form)
             .then(checkResponse)
             .then(data => {
                 dispatch({
@@ -147,7 +147,7 @@ export const logOut = () => {
             .then(checkResponse)
             .then(() => {
                 deleteCookie('token');
-                deleteCookie('tokenRefresh');
+                deleteCookie('refreshToken');
                 dispatch({
                     type: LOGOUT__USER_SUCCESS,
                 });
