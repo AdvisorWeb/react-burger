@@ -2,12 +2,18 @@ import React from 'react';
 import {useDrag} from "react-dnd";
 
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
-import {productProp} from '../../utils/variablePropType.js'
 
 import styles from './style.module.css'
-import PropTypes from "prop-types";
 
-const CardIngredient = ({card, onClick}) => {
+import {TItem} from '../../utils/typePropertys'
+
+interface ICardIngredient {
+    card: TItem
+    onClick: (card: TItem) => void
+}
+
+
+const CardIngredient = ({card, onClick}: ICardIngredient) => {
     const [{ opacity }, dragRef] = useDrag({
         type: 'items',
         item: { card },
@@ -35,10 +41,5 @@ const CardIngredient = ({card, onClick}) => {
         </div>
     );
 }
-
-CardIngredient.propTypes = {
-    card: productProp.isRequired,
-    onClick: PropTypes.func.isRequired,
-};
 
 export default CardIngredient;

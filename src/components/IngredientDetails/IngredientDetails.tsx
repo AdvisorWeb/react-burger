@@ -1,13 +1,15 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 
+import {IStore} from '../../utils/typePropertys'
+
 import styles from "./styles.module.css";
 
 const IngredientDetails = () => {
-    const selectedObject = useSelector(state => state.modal.selectedObject)
+    const selectedObject = useSelector((state: IStore) => state.modal.selectedObject)
 
     return (
-        <div className={`${styles.modalWrp} pl-15 pr-15`} key={`${selectedObject.id}-1`}>
+        <div className={`${styles.modalWrp} pl-15 pr-15`}>
             <div className={` pl-5 pr-5 pb-4`}>
                 <img src={selectedObject.image} className={`${styles.modalImg}`} alt=""/>
             </div>

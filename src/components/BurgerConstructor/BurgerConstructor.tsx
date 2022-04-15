@@ -5,12 +5,14 @@ import {useDrop} from 'react-dnd';
 
 import {Button, CurrencyIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Scrollbar} from 'smooth-scrollbar-react';
-import PropTypes from "prop-types";
 
-import BurgerConstructorDraggable from '../BurgerConstructorDraggable/BurgerConstructorDraggable.jsx'
+import BurgerConstructorDraggable from '../BurgerConstructorDraggable/BurgerConstructorDraggable'
 
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+
+import {IStore, TItem} from '../../utils/typePropertys'
+import {initScroll} from '../../utils/consts'
 
 import styles from './styles.module.css'
 
@@ -26,37 +28,41 @@ import {
 } from '../../services/actions/mainInfoAction'
 import {getOrder} from '../../services/actions/oderAction'
 
-const BurgerConstructor = ({initScroll}) => {
+const BurgerConstructor = () => {
 
     const dispatch = useDispatch()
     const scrollContainer = React.useRef(null);
-    const negativeItems = React.useRef([]);
-    const [isPopup, setIsPopup] = useState(false)
-    const constructorItems = useSelector(state => state.constructorItems)
+    const negativeItems = React.useRef<(HTMLElement | null)[]>([]);
+    const [isPopup, setIsPopup] = useState<boolean>(false)
+    const constructorItems = useSelector((state: IStore) => state.constructorItems)
 
     const [, dropTarget] = useDrop({
         accept: 'items',
-        drop({card}) {
+        drop({card}: { card: TItem }): void {
             dispatch(addItemConstructor(card))
         },
     });
 
-    const moveCard = (dragIndex, hoverIndex) => {
+    const moveCard = (dragIndex: number, hoverIndex: number) => {
         dispatch({type: MOVE_ITEM, hoverIndex, dragIndex})
     };
 
-    const deleteItem = (e, key, id) => {
+    const deleteItem = (e: any, key: number, id: number) => {
         const path = e.nativeEvent.path || (e.nativeEvent.composedPath && e.nativeEvent.composedPath());
-        const hasDeleteIcon = path.some(item => item.classList && item.classList.contains('constructor-element__action'))
-
+        const hasDeleteIcon = path.some((item: HTMLElement) => item.classList && item.classList.contains('constructor-element__action'))
         hasDeleteIcon && dispatch({type: REMOVE_ITEM, key, id})
         dispatch({type: REMOVE_ITEMS_COUNT, id})
     }
 
-    const submitData = (e) => {
+    const submitData = (e: any): void => {
         e.preventDefault()
-        const postRequest = {
-            'orders': basketItemsConcat.map(item => item._id)
+        type TPost = {
+            orders: number[]
+            order: any
+        }
+        const postRequest: TPost = {
+            orders: basketItemsConcat.map((item) => item._id),
+            order: null
         }
         dispatch(getOrder(postRequest))
     }
@@ -70,7 +76,7 @@ const BurgerConstructor = ({initScroll}) => {
     )
 
     const basketItemsConcat = useMemo(
-        () => {
+        (): TItem[] => {
             return [...constructorItems.bun, ...constructorItems.bun, ...constructorItems.other]
         }, [constructorItems]
     )
@@ -123,11 +129,7 @@ const BurgerConstructor = ({initScroll}) => {
                     >
                         <Scrollbar
                             className={`${styles.centerWrp} ${styles.h100} pr-2`}
-                            plugins={{
-                                overscroll: {
-                                    effect: 'bounce',
-                                },
-                            }}>
+                        >
                             {
                                 constructorItems.other[0] &&
                                 constructorItems.other.map((item, index) => {
@@ -170,7 +172,8 @@ const BurgerConstructor = ({initScroll}) => {
                     <span className="pr-2 text text_type_digits-medium">{totalPrice}</span>
                     <CurrencyIcon
                         type={'primary'}
-                        className={'icon'}
+                        // ВРЕМЕННО
+                        // className={'icon'}
                     />
                 </span>
                     <Button
@@ -187,9 +190,5 @@ const BurgerConstructor = ({initScroll}) => {
         </>
     );
 }
-
-BurgerConstructor.propTypes = {
-    initScroll: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

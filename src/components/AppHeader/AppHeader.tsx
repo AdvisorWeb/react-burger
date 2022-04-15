@@ -11,11 +11,11 @@ const AppHeader = () => {
                 <div className={styles.wrp}>
                     <nav>
                         <a className={'pt-4 pb-4 pl-5 pr-5 mr-2 text text_type_main-default ' + styles.link} href={'#'}>
-                            <BurgerIcon type="primary" size="medium"/>
+                            <BurgerIcon type="primary"/>
                             <span className={'pl-2'} style={{color: '#fff'}}>Конструктор</span>
                         </a>
                         <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link} href={'#'}>
-                            <ListIcon type="secondary" size="medium"/>
+                            <ListIcon type="secondary" />
                             <span className={'pl-2 text_color_inactive'}>Лента заказов</span>
                         </a>
                     </nav>
@@ -24,7 +24,7 @@ const AppHeader = () => {
                     </a>
                     <nav>
                         <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link} href={'#'}>
-                            <ProfileIcon type="secondary" size="medium"/>
+                            <ProfileIcon type="secondary" />
                             <span className={'pl-2 text_color_inactive'}>Личный кабинет</span>
                         </a>
                     </nav>

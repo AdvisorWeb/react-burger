@@ -5,6 +5,8 @@ import CardIngredient from '../CardIngredient/CardIngredient'
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
+import {initScroll} from '../../utils/consts'
+
 import {Scrollbar} from 'smooth-scrollbar-react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
@@ -13,7 +15,7 @@ import {ADD_OBJ_MODAL, REMOVE_OBJ_MODAL} from '../../services/actions/modalActio
 
 import styles from './styles.module.css'
 
-const BurgerIngredients = ({initScroll}) => {
+const BurgerIngredients = () => {
     const dispatch = useDispatch()
 
     const [currentTab, setCurrentTab] = React.useState(null)
@@ -147,9 +149,5 @@ const BurgerIngredients = ({initScroll}) => {
         </>
     );
 }
-
-BurgerIngredients.propTypes = {
-    initScroll: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;
