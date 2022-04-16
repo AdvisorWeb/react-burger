@@ -6,12 +6,14 @@ import {Input, Button, PasswordInput} from '@ya.praktikum/react-developer-burger
 import Loader from "../../components/Loader/Loader";
 import {signIn} from "../../services/actions/authAction";
 
+import {IStore} from "../../utils/tsTypes";
+
 import styles from "./styles.module.css";
-import {errorProcessing} from "../../utils/consts";
+
 
 const Login = () => {
     const dispatch = useDispatch()
-    const {request, error, errorMessage} = useSelector(state => state.authState.auth)
+    const {request} = useSelector((state: IStore) => state.authState.auth)
 
     const [user, setUser] = useState({
         "email": "",
@@ -22,13 +24,13 @@ const Login = () => {
         "password": false,
     })
 
-    const onChange = (e) => {
+    const onChange = (e:any) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         })
     }
-    const submitForm = (e) => {
+    const submitForm = (e:any) => {
         e.preventDefault()
         user.password.length && user.email
             ? dispatch(signIn(user))
@@ -62,7 +64,6 @@ const Login = () => {
                             onChange={e => onChange(e)}
                             value={user.password}
                             name={'password'}
-                            errorText={"Ошибка в password"}
                         />
                         {errorInput.password && <span className={styles.error}>Неверое или пустое поле</span>}
                     </div>
@@ -85,7 +86,6 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-
 
     );
 }

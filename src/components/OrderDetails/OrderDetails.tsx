@@ -3,11 +3,13 @@ import { useSelector} from "react-redux";
 
 import Loader from "../Loader/Loader";
 
+import {IStore} from "../../utils/tsTypes";
+
 import styles from "./style.module.css";
 import popupImg from "../../images/done.png";
 
 const OrderDetails = () => {
-    const order = useSelector(state => state.order)
+    const order = useSelector((state: IStore) => state.order)
     const {isLoading, orderFailed, answer} = order
 
     const content =

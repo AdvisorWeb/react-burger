@@ -1,27 +1,36 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import { BrowserRouter as  Router, Switch, Route, useHistory, useLocation} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from "react-router-dom";
 
 import AppHeader from "../AppHeader/AppHeader";
 import {ProtectedRoute} from '../ProtectedRoute/ProtectedRoute'
 import {Loader} from '../Loader/Loader'
 import Modal from "../Modal/Modal";
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
-import {Home, Login, ForgotPassword, Page404, Profile, Register, ResetPassword} from "../../pages/index";
+import {Home, Login, ForgotPassword, Page404, Profile, Register, ResetPassword} from "../../pages";
 
 import {getItems} from '../../services/actions/mainInfoAction'
 import {refreshToken} from '../../services/actions/authAction'
 
+import {IStore} from "../../utils/tsTypes";
+
 import styles from './style.module.css'
+
+type TLocation = {
+    state: {
+        background: any
+    }
+}
 
 const App = () => {
     const dispatch = useDispatch()
-    const location = useLocation();
+    const location: TLocation = useLocation();
     const history = useHistory();
     const background = location.state && location.state.background;
-    const {isLoading, itemsFailed} = useSelector(store => store.info)
+    const {isLoading, itemsFailed} = useSelector((store: IStore) => store.info)
 
-    const closePopup = () => {
+
+    const closePopup = (): void => {
         history.goBack();
     };
 

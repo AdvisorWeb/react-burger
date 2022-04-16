@@ -1,6 +1,7 @@
 import {getCookie, baseUrl, deleteCookie, setCookie} from './consts';
+import {TInputState, TDataAccess} from "./tsTypes";
 
-export const registrationUserRequest = async form => {
+export const registrationUserRequest = async (form:TInputState<string>) => {
     return await fetch(`${baseUrl}/auth/register `, {
         method: 'POST',
         mode: 'cors',
@@ -15,7 +16,7 @@ export const registrationUserRequest = async form => {
     });
 };
 
-export const loginRequest = async form => {
+export const loginRequest = async (form:TInputState<string>) => {
     return await fetch(`${baseUrl}/auth/login `, {
         method: 'POST',
         mode: 'cors',
@@ -46,7 +47,7 @@ export const getUserInfo = async () => {
 }
 
 export const logoutRequest = async () => {
-    const refreshToken = {token: getCookie('refreshToken')}
+    const refreshToken: object = {token: getCookie('refreshToken')}
     return await fetch(`${baseUrl}/auth/logout`, {
         method: 'POST',
         headers: {
@@ -57,7 +58,7 @@ export const logoutRequest = async () => {
 };
 
 export const refreshTokenRequest = () => {
-    const refreshToken = {token: getCookie('refreshToken')}
+    const refreshToken: object = {token: getCookie('refreshToken')}
     return fetch(`${baseUrl}/auth/token`, {
         method: 'POST',
         headers: {
@@ -67,8 +68,8 @@ export const refreshTokenRequest = () => {
     })
 }
 
-export const forgotPassword = (email) => {
-    const data = { email : email}
+export const forgotPassword = (email:string) => {
+    const data: object = { email : email}
     return fetch(`${baseUrl}/password-reset`, {
         method: 'POST',
         mode: 'cors',
@@ -83,7 +84,7 @@ export const forgotPassword = (email) => {
     })
 }
 
-export const resetPassword = (form) => {
+export const resetPassword = (form:{password:string, token:string}) => {
     const data = { password : form.password, token: form.token}
     return fetch(`${baseUrl}/password-reset/reset`, {
         method: 'POST',
@@ -99,7 +100,7 @@ export const resetPassword = (form) => {
     })
 }
 
-export const patсhInfo = async (form) => {
+export const patсhInfo = async (form:TInputState<string>) => {
      return await fetch(`${baseUrl}/auth/user/`, {
         method: 'PATCH',
         mode: 'cors',
@@ -115,7 +116,7 @@ export const patсhInfo = async (form) => {
     });
 }
 
-export const cookiesProcessing = (data) => {
+export const cookiesProcessing = (data:TDataAccess) => {
     deleteCookie('token');
     deleteCookie('tokenRefresh');
     let authToken;

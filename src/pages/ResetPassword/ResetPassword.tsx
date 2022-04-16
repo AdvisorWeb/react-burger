@@ -1,25 +1,30 @@
 import React, {useState} from 'react';
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+
+import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+
 import {postResetPassword} from "../../services/actions/authAction";
+
 import {errorProcessing} from "../../utils/consts";
+import {IStore} from "../../utils/tsTypes";
+
 
 const ResetPassword = () => {
     const dispath = useDispatch()
-    const {sendingEmail, error, errorMessage} = useSelector(state => state.authState.auth)
+    const {sendingEmail, error, errorMessage} = useSelector((state: IStore) => state.authState.auth)
     const [form, setForm] = useState({
         'password': '',
         'token': ''
     })
-    const onChange = (e) => {
+    const onChange = (e:any) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e:any) => {
         e.preventDefault()
         dispath(postResetPassword(form))
     }
@@ -35,6 +40,7 @@ const ResetPassword = () => {
         );
     }
 
+
     return (
         <div>
             <form className={'form'} onSubmit={onSubmit}>
@@ -42,7 +48,6 @@ const ResetPassword = () => {
                 {error && errorProcessing(errorMessage)}
                 <div className={`formInput mb-6`}>
                     <PasswordInput
-                        placeholder={'Введите новый пароль'}
                         onChange={onChange}
                         value={form.password}
                         name={'password'}
@@ -59,6 +64,7 @@ const ResetPassword = () => {
                         size={'default'}
                     />
                 </div>
+                
                 <Button type="primary" size="medium">
                     Сохранить
                 </Button>

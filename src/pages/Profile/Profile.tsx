@@ -1,27 +1,28 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, Redirect, useLocation} from "react-router-dom";
-import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import {logOut, getUser, refreshInfo, refreshToken} from "../../services/actions/authAction";
+import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
+import {logOut, getUser, refreshInfo} from "../../services/actions/authAction";
 import Loader from "../../components/Loader/Loader";
 
+import {IStore, TInputState} from "../../utils/tsTypes";
+
 import styles from './styles.module.css'
-import {errorProcessing} from "../../utils/consts";
+
 
 const Profile = () => {
     const location = useLocation();
     const dispatch = useDispatch()
-    const {request, user} = useSelector(state => state.authState.auth)
-    const {authorization, authorizationCheck, cookies} = useSelector(state => state.authState)
-
-    const [edit, setEdit] = useState(false)
-    const [form, setForm] = useState({
+    const {request, user} = useSelector((state: IStore) => state.authState.auth)
+    const {authorization, authorizationCheck, cookies} = useSelector((state: IStore) => state.authState)
+    const [edit, setEdit] = useState<boolean>(false)
+    const [form, setForm] = useState<TInputState<string>>({
         email: '',
         name: '',
         password: ''
     })
-    const [inputState, setInputState] = useState({
+    const [inputState, setInputState] = useState<TInputState<boolean>>({
         email: true,
         name: true,
         password: true
@@ -32,22 +33,23 @@ const Profile = () => {
         dispatch(logOut())
     }
 
-    const onChange = (e) => {
+    const onChange = (e: any) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
 
-    const onIconClick = (type) => {
+    const onIconClick = (type: string) => {
         setInputState({
             ...inputState,
+            // @ts-ignore
             [type]: !inputState[type]
         })
         setEdit(true)
     }
 
-    const resetForm = (e) => {
+    const resetForm = (e:any) => {
         e.preventDefault()
         setForm({
             ...form,
@@ -57,7 +59,7 @@ const Profile = () => {
         })
     }
 
-    const submitForm = (e) => {
+    const submitForm = (e:any) => {
         e.preventDefault()
         setForm({
             ...form,

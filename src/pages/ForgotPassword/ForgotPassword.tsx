@@ -1,18 +1,19 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 
 import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword} from "../../services/actions/authAction";
 
+import {IStore} from "../../utils/tsTypes";
+
 
 const ForgotPassword = () => {
     const dispatch = useDispatch()
-    const [email, setEmail] = useState('');
-    const {sendingEmail} = useSelector(state => state.authState.auth)
+    const [email, setEmail] = useState<string>('');
+    const {sendingEmail} = useSelector((state: IStore) => state.authState.auth)
 
-
-    const submitEvent = async (e) => {
+    const submitEvent = async (e: any) => {
         e.preventDefault()
         email.length && dispatch(postForgotPassword(email))
     }
@@ -34,12 +35,11 @@ const ForgotPassword = () => {
                     <Input
                         type={'email'}
                         placeholder={'Укажите e-mail'}
-                        onChange={e => setEmail(e.target.value )}
+                        onChange={e => setEmail(e.target.value)}
                         value={email}
                         name={'email'}
                         error={false}
                         size={'default'}
-                        required={true}
                     />
                 </div>
                 <Button type="primary" size="medium">

@@ -6,6 +6,8 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import Loader from "../../components/Loader/Loader";
 
 import {registerUser} from '../../services/actions/authAction'
+
+import {IStore, TInputState} from "../../utils/tsTypes";
 import {errorProcessing} from "../../utils/consts";
 
 import styles from './styles.module.css'
@@ -13,18 +15,18 @@ import styles from './styles.module.css'
 
 const Register = () => {
     const dispatch = useDispatch()
-    const {request, error, errorMessage} = useSelector(state => state.authState.auth)
-    const [user, setUser] = useState({
+    const {request, error, errorMessage} = useSelector((state: IStore) => state.authState.auth)
+    const [user, setUser] = useState<TInputState<string>>({
         "email": "",
         "password": "",
         "name": ""
     })
-    const [errorInput, setInputError] = useState({
+    const [errorInput, setInputError] = useState<TInputState<boolean>>({
         "email": false,
         "password": false,
         "name": false
     })
-    const onChange = (e) => {
+    const onChange = (e:any) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
@@ -35,7 +37,7 @@ const Register = () => {
         })
     }
 
-    const submitForm = (e) => {
+    const submitForm = (e:any) => {
         e.preventDefault()
         user.name.length && user.password.length > 5 && user.email
             ? dispatch(registerUser(user))

@@ -6,14 +6,24 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 
 import styles from "../BurgerConstructor/styles.module.css";
 
-import PropTypes from "prop-types";
-import {productProp} from '../../utils/variablePropType'
+import {TItem} from '../../utils/tsTypes'
 
-const BurgerConstructorDraggable = ({deleteItem, item, index, moveCard}) => {
-    const wrapperDrop = useRef(null);
+interface burgerDraggable {
+    deleteItem: (e: any, key: number, id: string) => void
+    item: TItem
+    index: number
+    moveCard: (dragIndex: number, hoverIndex: number) => void
+}
+type dropElement = {
+    index: number
+    itemId: string
+}
+
+const BurgerConstructorDraggable = ({deleteItem, item, index, moveCard}: burgerDraggable) => {
+    const wrapperDrop = useRef<HTMLDivElement>(null);
     const [, drop] = useDrop({
         accept:  'item',
-        hover(item, monitor) {
+        hover(item: dropElement, monitor) {
             if (!wrapperDrop.current) {
                 return;
             }
@@ -25,17 +35,21 @@ const BurgerConstructorDraggable = ({deleteItem, item, index, moveCard}) => {
             const hoverBoundingRect = wrapperDrop.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
+            const hoverClientY = clientOffset && clientOffset.y - hoverBoundingRect.top;
+            if(dragIndex && hoverClientY){
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
+                moveCard(dragIndex, hoverIndex);
+                item.index = hoverIndex;
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-            moveCard(dragIndex, hoverIndex);
-            item.index = hoverIndex;
+
         },
     });
+
     const itemId = item._id
     const [{ isDragging }, drag] = useDrag({
         type: 'item',
@@ -69,12 +83,5 @@ const BurgerConstructorDraggable = ({deleteItem, item, index, moveCard}) => {
         </div>
     );
 }
-
-BurgerConstructorDraggable.propTypes = {
-    deleteItem: PropTypes.func.isRequired,
-    moveCard: PropTypes.func.isRequired,
-    index:PropTypes.number.isRequired,
-    item: productProp.isRequired,
-};
 
 export default BurgerConstructorDraggable;

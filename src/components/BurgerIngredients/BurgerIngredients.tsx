@@ -1,30 +1,19 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {
-    Link,
-    useLocation,
-} from "react-router-dom";
-
-import CardIngredient from '../CardIngredient/CardIngredient'
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useSelector} from "react-redux";
 
 import {Scrollbar} from 'smooth-scrollbar-react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
+import CardIngredient from '../CardIngredient/CardIngredient'
+
+import {IStore} from "../../utils/tsTypes";
+import {initScroll} from '../../utils/consts'
 
 import styles from './styles.module.css'
 
-const BurgerIngredients = ({initScroll}) => {
-    const dispatch = useDispatch()
-
-
-    const [currentTab, setCurrentTab] = React.useState(null)
-    const [isPopup, setIsPopup] = useState(false)
-
+const BurgerIngredients = () => {
+    const [currentTab, setCurrentTab] = React.useState<string | null>(null)
     const scrollContainer = React.useRef(null);
-
-    const {items} = useSelector(store => store.info)
+    const {items} = useSelector((store: IStore) => store.info)
 
     const category = useMemo(
         () => {
@@ -48,12 +37,14 @@ const BurgerIngredients = ({initScroll}) => {
         }, [items]
     )
 
-    const scrollWrapper = useRef(null)
+    const scrollWrapper = useRef<any>(null)
 
-    const tabScrollEvent = () => {
-        const categoryWrapper = [...document.querySelectorAll('[data-anchor]')]
-        const offsetTopWrapper = scrollWrapper.current.offset.y + 250
-        categoryWrapper.forEach(item => {
+    const tabScrollEvent = (e: any = null) => {
+        // @ts-ignore
+        const categoryWrapper = [...document.querySelectorAll<HTMLElement>("[data-anchor]")]
+
+        const offsetTopWrapper = scrollWrapper.current && scrollWrapper.current.offset.y + 250
+        categoryWrapper.forEach((item) => {
             const offsetTopItem = item.offsetTop
             const offsetBotItem = item.getBoundingClientRect().height + offsetTopItem
             const itemType = item.getAttribute('data-anchor')
@@ -64,16 +55,20 @@ const BurgerIngredients = ({initScroll}) => {
     }
 
     const tabScrollControl = useCallback(
-        (type) => () => {
+        (type: string | null) => (): void => {
+            const toTab: HTMLElement | null = document.querySelector(`[data-anchor=${type}]`)
             setCurrentTab(type)
-            scrollWrapper.current.scrollTop = document.querySelector(`[data-anchor=${type}]`).offsetTop
+            if (toTab && scrollWrapper.current) {
+                scrollWrapper.current.scrollTop = toTab.offsetTop
+            }
+
         }, []
     )
 
     useEffect(() => {
-        initScroll(scrollContainer.current)
+        initScroll(scrollContainer.current, [])
         tabScrollEvent()
-        tabScrollControl()
+        tabScrollControl(currentTab)
     }, [tabScrollControl, initScroll]);
 
     return (
@@ -101,11 +96,7 @@ const BurgerIngredients = ({initScroll}) => {
                         className={`${styles.h100} pr-2 pl-2`}
                         onScroll={(e) => tabScrollEvent(e)}
                         ref={scrollWrapper}
-                        plugins={{
-                            overscroll: {
-                                effect: 'bounce',
-                            },
-                        }}>
+                    >
                         {
                             category.map(item => {
                                 return (
@@ -122,10 +113,10 @@ const BurgerIngredients = ({initScroll}) => {
                                         {
                                             item.items.map((card) =>
                                                 <CardIngredient
-                                                    type={item.type}
+                                                    // type={item.type}
                                                     card={card}
                                                     key={card._id}
-                                                  />
+                                                />
                                             )
                                         }
                                     </div>
@@ -139,8 +130,5 @@ const BurgerIngredients = ({initScroll}) => {
     );
 }
 
-BurgerIngredients.propTypes = {
-    initScroll: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;

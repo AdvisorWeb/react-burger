@@ -1,23 +1,22 @@
-import React from "react";
+import React, {ReactElement} from "react";
 
-export const baseUrl = 'https://norma.nomoreparties.space/api'
+export const baseUrl: string = 'https://norma.nomoreparties.space/api'
 
-export const checkResponse = (res) => {
-
+export const checkResponse = (res: any) => {
     if (res.ok) {
         return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
         new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: any = false, props: any = false) {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -40,12 +39,12 @@ export function setCookie(name, value, props) {
     document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
-    setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string) {
+    setCookie(name, null, {expires: -1});
 }
 
-export const errorProcessing = (errorMessage) => {
-    let message = ''
+export const errorProcessing = (errorMessage: string): ReactElement => {
+    let message:string = ''
     switch (errorMessage) {
         case 'Ошибка 401': {
             message = 'Неправильный логин или пароль'
@@ -59,13 +58,24 @@ export const errorProcessing = (errorMessage) => {
             message = 'Неверные данные'
             break
         }
-
         default: {
             message = 'Ошибка'
             break
         }
     }
 
-    return <span className={'errorMessage'}>{message}</span>
+    return <span className={'errorMessage'}> {message} </span>
 
+}
+
+export const initScroll = (scrollContainer: HTMLElement | null, negativeItems: (HTMLElement | null)[]): void => {
+    setTimeout(() => {
+        if (scrollContainer) {
+            const scrollContainerTop: number = scrollContainer.getBoundingClientRect().top || 0;
+            let negativeScrollHeight: number = 0
+            negativeItems && negativeItems.forEach((item): number => negativeScrollHeight += item ? item && item.getBoundingClientRect().height : 0)
+            const maxHeight: number = window.innerHeight - scrollContainerTop - 40 - negativeScrollHeight
+            scrollContainer.style.height = `${maxHeight}px`
+        }
+    }, 0)
 }

@@ -10,7 +10,7 @@ export function getOrder({order}) {
         dispatch({
             type: GET_ORDER_REQUEST
         });
-        fetch(`${baseUrl}/orders/${order}`)
+        fetch(`${baseUrl}/orders/orders:${order}`)
             .then(checkResponse)
             .then(data => {
                 dispatch({
