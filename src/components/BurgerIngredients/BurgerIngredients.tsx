@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useSelector} from "react-redux";
 
 import {Scrollbar} from 'smooth-scrollbar-react';
@@ -9,6 +9,7 @@ import {IStore} from "../../utils/tsTypes";
 import {initScroll} from '../../utils/consts'
 
 import styles from './styles.module.css'
+import {ScrollStatus} from "smooth-scrollbar/interfaces";
 
 const BurgerIngredients = () => {
     const [currentTab, setCurrentTab] = React.useState<string | null>(null)
@@ -39,7 +40,7 @@ const BurgerIngredients = () => {
 
     const scrollWrapper = useRef<any>(null)
 
-    const tabScrollEvent = (e: any = null) => {
+    const tabScrollEvent = (e: ScrollStatus | null) => {
         // @ts-ignore
         const categoryWrapper = [...document.querySelectorAll<HTMLElement>("[data-anchor]")]
 
@@ -67,7 +68,7 @@ const BurgerIngredients = () => {
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
-        tabScrollEvent()
+        tabScrollEvent(null)
         tabScrollControl(currentTab)
     }, [tabScrollControl, initScroll]);
 

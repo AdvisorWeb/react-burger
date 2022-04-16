@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import {useRef} from 'react'
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -9,7 +9,7 @@ import styles from "../BurgerConstructor/styles.module.css";
 import {TItem} from '../../utils/tsTypes'
 
 interface burgerDraggable {
-    deleteItem: (e: any, key: number, id: string) => void
+    deleteItem: (e: MouseEvent<HTMLElement>, key: number, id: string) => void
     item: TItem
     index: number
     moveCard: (dragIndex: number, hoverIndex: number) => void

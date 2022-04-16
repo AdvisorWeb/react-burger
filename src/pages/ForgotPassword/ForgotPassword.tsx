@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 
@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState<string>('');
     const {sendingEmail} = useSelector((state: IStore) => state.authState.auth)
 
-    const submitEvent = async (e: any) => {
+    const submitEvent = async (e: FormEvent) => {
         e.preventDefault()
         email.length && dispatch(postForgotPassword(email))
     }

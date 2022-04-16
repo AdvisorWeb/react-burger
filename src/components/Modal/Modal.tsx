@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, MouseEvent} from 'react';
 import ReactDOM from 'react-dom'
 
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
@@ -13,11 +13,11 @@ interface IModal {
 
 const Modal: FC<IModal> = ({name, onClick, children}) => {
     const modalRoot: HTMLElement | null = document.getElementById("react-modals");
-    const closePopup = (event:any) => {
-        const key: string = event.key
-        key  === 'Escape' && onClick()
+    const closePopup = (e: KeyboardEvent) => {
+        const key: string = e.key
+        key === 'Escape' && onClick()
     }
-    const stopPropagation = (e:any) => {
+    const stopPropagation = (e: MouseEvent) => {
         e.stopPropagation()
     }
 

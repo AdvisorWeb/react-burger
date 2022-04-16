@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, ChangeEvent, FormEvent} from 'react';
 import {Link, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -17,14 +17,14 @@ const ResetPassword = () => {
         'password': '',
         'token': ''
     })
-    const onChange = (e:any) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
 
-    const onSubmit = (e:any) => {
+    const onSubmit = (e:FormEvent) => {
         e.preventDefault()
         dispath(postResetPassword(form))
     }

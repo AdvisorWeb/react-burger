@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
@@ -26,7 +26,7 @@ const Register = () => {
         "password": false,
         "name": false
     })
-    const onChange = (e:any) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
@@ -37,7 +37,7 @@ const Register = () => {
         })
     }
 
-    const submitForm = (e:any) => {
+    const submitForm = (e: FormEvent) => {
         e.preventDefault()
         user.name.length && user.password.length > 5 && user.email
             ? dispatch(registerUser(user))

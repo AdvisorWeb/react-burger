@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState, useRef} from 'react';
+import React, {useEffect, useMemo, useState, useRef, FormEvent, MouseEvent} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from 'react-dnd';
 import {Redirect} from 'react-router-dom'
@@ -38,15 +38,19 @@ const BurgerConstructor = () => {
         dispatch({type: MOVE_ITEM, hoverIndex, dragIndex})
     };
 
-    const deleteItem = (e: any, key: number, id: string) => {
+
+    const deleteItem = (e: MouseEvent, key: number, id: string) => {
+
+        // @ts-ignore
         const path = e.nativeEvent.path || (e.nativeEvent.composedPath && e.nativeEvent.composedPath());
+
         const hasDeleteIcon = path.some((item: HTMLElement) => item.classList && item.classList.contains('constructor-element__action'))
 
         hasDeleteIcon && dispatch({type: REMOVE_ITEM, key, id})
-        dispatch({type: REMOVE_ITEMS_COUNT, id})
+        hasDeleteIcon && dispatch({type: REMOVE_ITEMS_COUNT, id})
     }
 
-    const submitData = (e: any) => {
+    const submitData = (e: FormEvent) => {
         e.preventDefault()
 
         type TPost = {

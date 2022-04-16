@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -24,13 +24,13 @@ const Login = () => {
         "password": false,
     })
 
-    const onChange = (e:any) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         })
     }
-    const submitForm = (e:any) => {
+    const submitForm = (e:FormEvent) => {
         e.preventDefault()
         user.password.length && user.email
             ? dispatch(signIn(user))

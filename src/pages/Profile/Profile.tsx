@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, FormEvent, MouseEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, Redirect, useLocation} from "react-router-dom";
 
@@ -33,7 +33,7 @@ const Profile = () => {
         dispatch(logOut())
     }
 
-    const onChange = (e: any) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
@@ -49,7 +49,7 @@ const Profile = () => {
         setEdit(true)
     }
 
-    const resetForm = (e:any) => {
+    const resetForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setForm({
             ...form,
@@ -59,7 +59,7 @@ const Profile = () => {
         })
     }
 
-    const submitForm = (e:any) => {
+    const submitForm = (e: FormEvent) => {
         e.preventDefault()
         setForm({
             ...form,
