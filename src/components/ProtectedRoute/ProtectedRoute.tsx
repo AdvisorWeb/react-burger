@@ -5,7 +5,6 @@ import {useSelector} from "react-redux";
 import {IStore} from "../../utils/tsTypes";
 
 export const ProtectedRoute: ({children, ...rest}: { children: any; [p: string]: any }) => false | any = ({children, ...rest}) => {
-// export const ProtectedRoute = ({children, ...rest}) =>{
 
     const {authorization, authorizationCheck} = useSelector((state: IStore) => state.authState)
 

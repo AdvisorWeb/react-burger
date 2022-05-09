@@ -76,7 +76,7 @@ export const forgotPassword = (email:string) => {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
@@ -117,17 +117,36 @@ export const patсhInfo = async (form:TInputState<string>) => {
 }
 
 export const cookiesProcessing = (data:TDataAccess) => {
-    deleteCookie('token');
-    deleteCookie('tokenRefresh');
     let authToken;
     if (data.accessToken.indexOf('Bearer') === 0) {
         authToken = data.accessToken.split('Bearer ')[1]
     }
     if (authToken) {
+        deleteCookie('token');
+        deleteCookie('refreshToken');
         setCookie('token', authToken);
         setCookie('refreshToken', data.refreshToken);
     }
     return data;
+}
+
+export const postOrder = (order: string[]) => {
+    const data = {
+        "ingredients": order
+    }
+    return fetch(`${baseUrl}/orders`, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + getCookie('token')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+    })
 }
 
 

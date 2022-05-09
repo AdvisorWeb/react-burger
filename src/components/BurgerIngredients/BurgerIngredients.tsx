@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef} from 'react';
 import {useSelector} from "react-redux";
 
 import {Scrollbar} from 'smooth-scrollbar-react';
@@ -130,6 +130,5 @@ const BurgerIngredients = () => {
         </>
     );
 }
-
 
 export default BurgerIngredients;

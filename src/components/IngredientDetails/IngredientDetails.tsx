@@ -31,26 +31,20 @@ const IngredientDetails = ({inPage}: IngredientDetails) => {
                 </div>
                 <ul className={styles.modalTypes}>
                     <li className={`${styles.modalLi}`}>
-                            <span
-                                className={`${styles.modalType} text text_type_main-default`}> Калории,ккал </span>
-                        <span
-                            className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.calories}</span>
+                        <span className={`${styles.modalType} text text_type_main-default`}> Калории,ккал </span>
+                        <span className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.calories}</span>
                     </li>
                     <li className={`${styles.modalLi}`}>
                         <span className={`${styles.modalType} text text_type_main-default`}> Белки, г</span>
-                        <span
-                            className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.proteins}</span>
+                        <span className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.proteins}</span>
                     </li>
                     <li className={`${styles.modalLi}`}>
                         <span className={`${styles.modalType} text text_type_main-default`}> Жиры, г </span>
-                        <span
-                            className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.fat}</span>
+                        <span className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.fat}</span>
                     </li>
                     <li>
-                            <span
-                                className={`${styles.modalType} text text_type_main-default`}> Углеводы, г </span>
-                        <span
-                            className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.carbohydrates}</span>
+                        <span  className={`${styles.modalType} text text_type_main-default`}> Углеводы, г </span>
+                        <span   className={`${styles.modalValue} text text_type_digits-default`}>{selectedObject && selectedObject.carbohydrates}</span>
                     </li>
                 </ul>
             </div>

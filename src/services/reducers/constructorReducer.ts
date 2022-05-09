@@ -4,19 +4,26 @@ import {
     REMOVE_ITEM,
     MOVE_ITEM,
     REFRESH_ITEMS,
-} from '../actions/constructorAction'
+} from '../actions/constant'
+import {TItem} from "../../utils/tsTypes";
+import {TConstructorItems} from "../actions/constructorAction";
 
-const initialState = {
-    'bun' : [],
-    'other' : [],
+export type TItemsConstructorState = {
+    'bun': (TItem | null)[],
+    'other': (TItem | null)[],
+}
+
+const initialState: TItemsConstructorState = {
+    'bun': [],
+    'other': [],
 };
 
-export const itemsConstructor = (state = initialState, action) => {
+export const itemsConstructor = (state = initialState, action: TConstructorItems) => {
     switch (action.type) {
         case ADD_ITEM_BUN: {
             return {
                 ...state,
-                'bun':  [{...action.payload.card }]
+                'bun': [{...action.payload.card}]
             };
         }
         case ADD_ITEM_OTHER: {
@@ -28,7 +35,7 @@ export const itemsConstructor = (state = initialState, action) => {
         case REMOVE_ITEM: {
             return {
                 ...state,
-                'other': state.other.filter((item) => item.key !== action.key)
+                'other': state.other.filter((item) => item && item.key !== action.key)
             };
         }
         case MOVE_ITEM: {
@@ -42,8 +49,8 @@ export const itemsConstructor = (state = initialState, action) => {
         case REFRESH_ITEMS: {
             return {
                 ...state,
-                'bun' : [],
-                'other' : [],
+                'bun': [],
+                'other': [],
             };
         }
         default: {

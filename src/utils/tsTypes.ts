@@ -1,3 +1,5 @@
+import {TWsState} from "../services/reducers/wsReducer";
+
 export interface IStore {
     info: {
         items: Array<TItem>
@@ -11,9 +13,10 @@ export interface IStore {
     order : {
         isLoading: boolean
         orderFailed: boolean
-        answer: {
-            total: string,
-            orders: Array<TItem>
+        data: {
+            order: {
+                number: number
+            }
         }
     }
     authState : {
@@ -33,6 +36,7 @@ export interface IStore {
             }
         }
     }
+    ws: TWsState
 }
 
 export type TItem = {
@@ -50,7 +54,8 @@ export type TItem = {
     __v: number
     count: number
     index?: number
-    key: number
+    key: string
+    countTemp?: number
 }
 
 export type TInputState<s> = {

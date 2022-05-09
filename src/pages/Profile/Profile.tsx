@@ -9,13 +9,13 @@ import Loader from "../../components/Loader/Loader";
 import {IStore, TInputState} from "../../utils/tsTypes";
 
 import styles from './styles.module.css'
-
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const Profile = () => {
     const location = useLocation();
     const dispatch = useDispatch()
     const {request, user} = useSelector((state: IStore) => state.authState.auth)
-    const {authorization, authorizationCheck, cookies} = useSelector((state: IStore) => state.authState)
+    const {authorization, authorizationCheck} = useSelector((state: IStore) => state.authState)
     const [edit, setEdit] = useState<boolean>(false)
     const [form, setForm] = useState<TInputState<string>>({
         email: '',
@@ -28,10 +28,6 @@ const Profile = () => {
         password: true
     })
 
-
-    const handlerLogOut = () => {
-        dispatch(logOut())
-    }
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -68,7 +64,6 @@ const Profile = () => {
         })
         dispatch(refreshInfo(form))
     }
-
 
     useEffect(
         () => {
@@ -111,44 +106,10 @@ const Profile = () => {
 
 
     return (
-        request
+        !authorizationCheck
             ? <Loader/>
-            : cookies
-            ? <div className={`${styles.profileWrp}`}>
-                <div className={`${styles.sidebar} mr-15`}>
-                    <ul className={'mb-20'}>
-                        <li className={styles.li}>
-                            <NavLink
-                                to={'/profile'}
-                                className={`${styles.link} text text_type_main-medium`}
-                                activeClassName={styles.linkActive}
-                            >
-                                Профиль
-                            </NavLink>
-                        </li>
-                        <li className={styles.li}>
-                            <NavLink
-                                to={'/orders'}
-                                className={`${styles.link} text text_type_main-medium`}
-                                activeClassName={styles.linkActive}
-                            >
-                                История заказов
-                            </NavLink>
-                        </li>
-                        <li className={styles.li}>
-                            <button
-                                onClick={handlerLogOut}
-                                className={`${styles.link} text text_type_main-medium`}
-                            >
-                                Выход
-                            </button>
-                        </li>
-                    </ul>
-                    <div className={'text text_type_main-default text_color_inactive '}>
-                        В этом разделе вы можете
-                        изменить свои персональные данные
-                    </div>
-                </div>
+            : <div className={`${styles.profileWrp}`}>
+                <Sidebar />
                 <form action="" className={`${styles.form}`} onSubmit={submitForm}>
                     <div className={`mb-6`}>
                         <Input
@@ -211,7 +172,6 @@ const Profile = () => {
                     }
                 </form>
             </div>
-            : <Loader/>
 
     );
 }

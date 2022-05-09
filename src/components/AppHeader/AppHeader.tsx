@@ -17,15 +17,17 @@ const AppHeader = () => {
                             className={`pt-4 pb-4 pl-5 pr-5 mr-2 text text_type_main-default ${styles.link}`}
                             activeClassName={styles.linkActive}
                         >
-                            {/*<BurgerIcon type="secondary" size="medium"/>*/}
                             <BurgerIcon type="secondary" />
                             <span className={'pl-2 text_color_inactive'}>Конструктор</span>
                         </NavLink>
-                        <a className={'pt-4 pb-4 pl-5 pr-5 text text_type_main-default ' + styles.link} href={'#'}>
-                            {/*<ListIcon type="secondary" size="medium"/>*/}
+                        <NavLink
+                            className={`pt-4 pb-4 pl-5 pr-5 text text_type_main-default ${styles.link}`}
+                            to={'/feed'}
+                            activeClassName={styles.linkActive}
+                        >
                             <ListIcon type="secondary" />
                             <span className={'pl-2 text_color_inactive'}>Лента заказов</span>
-                        </a>
+                        </NavLink>
                     </nav>
                     <Link to="/" className={styles.logo}>
                         <Logo/>
@@ -36,7 +38,6 @@ const AppHeader = () => {
                             to={'/profile'}
                             activeClassName={styles.linkActive}
                         >
-                            {/*<ProfileIcon type="secondary" size="medium"/>*/}
                             <ProfileIcon type="secondary"/>
                             <span className={'pl-2 text_color_inactive'}>Личный кабинет</span>
                         </NavLink>

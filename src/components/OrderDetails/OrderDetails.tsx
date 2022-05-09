@@ -10,8 +10,7 @@ import popupImg from "../../images/done.png";
 
 const OrderDetails = () => {
     const order = useSelector((state: IStore) => state.order)
-    const {isLoading, orderFailed, answer} = order
-
+    const {isLoading, orderFailed, data} = order
     const content =
         !orderFailed
             ?
@@ -19,7 +18,7 @@ const OrderDetails = () => {
                     <div
                         className={`${styles.popupNumber}  text text_type_digits-large pb-8`}
                     >
-                        {answer.total}
+                        {data.order.number}
                     </div>
                     <span
                         className={'text text_type_main-medium'}

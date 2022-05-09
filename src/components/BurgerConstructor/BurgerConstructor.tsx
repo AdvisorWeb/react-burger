@@ -9,14 +9,16 @@ import BurgerConstructorDraggable from '../BurgerConstructorDraggable/BurgerCons
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
-import {MOVE_ITEM, REMOVE_ITEM, REFRESH_ITEMS, addItemConstructor} from '../../services/actions/constructorAction'
-import {REMOVE_ITEMS_COUNT, REFRESH_ITEMS_COUNT} from '../../services/actions/mainInfoAction'
+import {MOVE_ITEM, REMOVE_ITEM, REFRESH_ITEMS} from '../../services/actions/constant'
+import { addItemConstructor} from '../../services/actions/constructorAction'
+import {REMOVE_ITEMS_COUNT, REFRESH_ITEMS_COUNT} from '../../services/actions/constant'
 import {getOrder} from '../../services/actions/oderAction'
 
 import {initScroll} from '../../utils/consts'
 import {IStore, TItem} from '../../utils/tsTypes'
 
 import styles from './styles.module.css'
+
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
@@ -39,7 +41,7 @@ const BurgerConstructor = () => {
     };
 
 
-    const deleteItem = (e: MouseEvent, key: number, id: string) => {
+    const deleteItem = (e: MouseEvent, key: string, id: string) => {
 
         // @ts-ignore
         const path = e.nativeEvent.path || (e.nativeEvent.composedPath && e.nativeEvent.composedPath());
@@ -49,13 +51,11 @@ const BurgerConstructor = () => {
         hasDeleteIcon && dispatch({type: REMOVE_ITEM, key, id})
         hasDeleteIcon && dispatch({type: REMOVE_ITEMS_COUNT, id})
     }
-
+    type TPost = {
+        order: string[]
+    }
     const submitData = (e: FormEvent) => {
         e.preventDefault()
-
-        type TPost = {
-            order: string[]
-        }
         const postRequest: TPost = {
             order: basketItemsConcat.map((item: TItem) => item._id)
         }

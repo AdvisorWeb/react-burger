@@ -2,38 +2,50 @@ import {
     POST_USER_REQUEST,
     POST_USER_SUCCESS,
     POST_USER_ERROR,
-
     SIGN_USER_REQUEST,
     SIGN_USER_SUCCESS,
     SIGN_USER_ERROR,
-
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_ERROR,
-
     REFRESH_COOKIES_REQUEST,
     REFRESH_COOKIES_SUCCESS,
     REFRESH_COOKIES_ERROR,
-
     LOGOUT__USER_REQUEST,
     LOGOUT__USER_SUCCESS,
     LOGOUT__USER_ERROR,
-
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_ERROR,
-
     REFRESH_USER_REQUEST,
     REFRESH_USER_SUCCESS,
     REFRESH_USER_ERROR,
-
-
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_ERROR
-} from '../actions/authAction'
+} from '../actions/constant'
 
-const initialState = {
+import {TAuthActions} from '../actions/authAction'
+
+export type TAuthState = {
+    "authorization" : boolean,
+    "authorizationCheck" : boolean,
+    "cookies" : boolean,
+    'auth' : {
+        'request': boolean,
+        'error': boolean,
+        'errorMessage': string,
+        'accessToken': null | string,
+        'refreshToken': null | string,
+        'sendingEmail': boolean,
+        "user": {
+            "email": string,
+            "name": string
+        },
+    }
+};
+
+const initialState: TAuthState = {
     "authorization" : false,
     "authorizationCheck" : false,
     "cookies" : false,
@@ -51,7 +63,7 @@ const initialState = {
     }
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions) => {
     switch (action.type) {
         case SIGN_USER_REQUEST: {
             return {
@@ -237,6 +249,8 @@ export const authReducer = (state = initialState, action) => {
         case REFRESH_COOKIES_REQUEST: {
             return {
                 ...state,
+                "authorization" : false,
+                "authorizationCheck" : false,
                 "cookies" : false,
                 'auth' : {
                     ...state.auth,

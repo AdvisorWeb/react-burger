@@ -5,18 +5,26 @@ import {
     ADD_ITEMS_OTHER_COUNT,
     ADD_ITEMS_BUN_COUNT,
     REMOVE_ITEMS_COUNT,
-    REFRESH_ITEMS_COUNT
-} from '../actions/mainInfoAction'
+    REFRESH_ITEMS_COUNT,
+} from '../actions/constant'
+import {TItemsActions} from '../actions/mainInfoAction'
+import {TItem} from "../../utils/tsTypes";
 
+export type TItemsState = {
+    items: (TItem | null)[]
+    itemsRequest: boolean,
+    itemsFailed: boolean,
+    isLoading: boolean
+};
 
-const initialState = {
+const initialState: TItemsState = {
     items: [],
     itemsRequest: false,
     itemsFailed: false,
     isLoading: true
 };
 
-export const mainInfoReducer = (state = initialState, action) => {
+export const mainInfoReducer = (state = initialState, action: TItemsActions) => {
     switch (action.type) {
         case GET_ITEMS_REQUEST: {
             return {
@@ -28,7 +36,7 @@ export const mainInfoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 itemsFailed: false,
-                items: action.items.map(item => {
+                items: action.data.map(item => {
                     return {...item, count: 0}
                 }),
                 itemsRequest: false,
@@ -39,12 +47,11 @@ export const mainInfoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: state.items.map(item => {
-                    if(item.type === "bun"){
+                    if (item && item.type === "bun") {
                         if (item._id === action.card._id) {
-                            return {...item, count: 2 }
-                        }
-                        else {
-                            return {...item, count: 0 }
+                            return {...item, count: 2}
+                        } else {
+                            return {...item, count: 0}
                         }
                     }
                     return item
@@ -55,11 +62,10 @@ export const mainInfoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: state.items.map(item => {
-                    if (item._id === action.card._id) {
-                        return {...item, count: item.count + 1 }
+                    if (item && item._id === action.card._id) {
+                        return {...item, count: item.count + 1}
                     }
                     return item
-
                 }),
             };
         }
@@ -67,7 +73,7 @@ export const mainInfoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: state.items.map(item => {
-                    if (item._id === action.id) {
+                    if (item && item._id === action.id) {
                         return {...item, count: item.count - 1}
                     }
                     return item

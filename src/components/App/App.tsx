@@ -15,6 +15,9 @@ import {refreshToken} from '../../services/actions/authAction'
 import {IStore} from "../../utils/tsTypes";
 
 import styles from './style.module.css'
+import Feed from "../../pages/Feed/Feed";
+import OrderInfo from "../OrderInfo/OrderInfo";
+import History from "../../pages/History/History";
 
 type TLocation = {
     state: {
@@ -29,74 +32,116 @@ const App = () => {
     const background = location.state && location.state.background;
     const {isLoading, itemsFailed} = useSelector((store: IStore) => store.info)
 
+    const { authorizationCheck} = useSelector((store: IStore) => store.authState)
 
     const closePopup = (): void => {
         history.goBack();
     };
 
     useEffect(
-        () => {
-            dispatch(getItems())
+        ()=> {
             dispatch(refreshToken())
-        }, [dispatch]
+        },[]
     )
 
+    useEffect(
+        () => {
+            dispatch(getItems())
+        }, [dispatch, authorizationCheck]
+    )
     return (
-        <>
-            <AppHeader/>
-            <main className={'container'}>
-                <Switch location={background || location}>
-                    <Route path="/" exact={true}>
-                        {
-                            itemsFailed
-                                ? <p className={styles.error}>Произошла ошибка или проблемы с интернетами</p>
-                                : !isLoading ? <Home/> : <Loader/>
-                        }
-                    </Route>
-                    <ProtectedRoute path="/login" exact={true} toPath='/'>
-                        <Login/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/register" exact={true}>
-                        <Register/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/forgot-password" exact={true}>
-                        <ForgotPassword/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/reset-password" exact={true}>
-                        <ResetPassword/>
-                    </ProtectedRoute>
-                    {/*<ProtectedRoute path="/profile" exact={true} toPath={'/login'}>*/}
-                    {/*    <Profile/>*/}
-                    {/*</ProtectedRoute>*/}
+        !authorizationCheck
+            ? <Loader/>
+            :  <>
+                <AppHeader/>
+                <main className={'container'}>
+                    <Switch location={background || location}>
+                        <Route path="/" exact={true}>
+                            {
+                                itemsFailed
+                                    ? <p className={styles.error}>Произошла ошибка или проблемы с интернетами</p>
+                                    : !isLoading ? <Home/> : <Loader/>
+                            }
+                        </Route>
+                        <ProtectedRoute path="/login" exact={true} toPath='/'>
+                            <Login/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/register" exact={true}>
+                            <Register/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/forgot-password" exact={true}>
+                            <ForgotPassword/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/reset-password" exact={true}>
+                            <ResetPassword/>
+                        </ProtectedRoute>
 
-                    <Route
-                        path="/profile"
-                        exact={true}
-                    >
-                        <Profile/>
-                    </Route>
-                    <Route path='/ingredients/:ingredientId' exact>
-                        <IngredientDetails inPage={true}/>
-                    </Route>
-                    <Route>
-                        <Page404/>
-                    </Route>
-                </Switch>
+                        <Route path='/ingredients/:ingredientId' exact>
+                            <IngredientDetails inPage={true}/>
+                        </Route>
 
-                {background && (
-                    <Route
-                        path='/ingredients/:ingredientId'
-                        children={
-                            <Modal name={'Детали ингредиента'} onClick={closePopup}>
-                                <IngredientDetails inPage={false}/>
-                            </Modal>
-                        }
-                    />
-                )}
+                        <Route
+                            path="/profile/"
+                            exact={true}
+                        >
+                            <Profile/>
+                        </Route>
+                        <Route path="/profile/orders/" exact={true}>
+                            <History/>
+                        </Route>
+                        <Route path='/profile/orders/:id' exact>
+                            <OrderInfo inPage={true}/>
+                        </Route>
+                        <Route path='/feed/' exact>
+                            <Feed/>
+                        </Route>
+
+                        <Route path='/feed/:id' exact>
+                            <OrderInfo inPage={true}/>
+                        </Route>
 
 
-            </main>
-        </>
+                        <Route>
+                            <Page404/>
+                        </Route>
+                    </Switch>
+
+                    {background && (
+                        <Route
+                            path='/ingredients/:ingredientId'
+                            children={
+                                <Modal name={'Детали ингредиента'} onClick={closePopup}>
+                                    <IngredientDetails inPage={false}/>
+                                </Modal>
+                            }
+                        />
+                    )}
+                    {background && (
+                        <Route
+                            path='/feed/:id'
+                            children={
+                                <Modal onClick={closePopup}>
+                                    <OrderInfo inPage={false}/>
+                                </Modal>
+                            }
+                        />
+                    )}
+                    {background && (
+                        <Route
+                            path='/profile/orders/:id'
+                            children={
+                                <Modal onClick={closePopup}>
+                                    <OrderInfo inPage={false}/>
+                                </Modal>
+                            }
+                        />
+                    )}
+
+
+                </main>
+            </>
+
+
     );
 }
 

@@ -1,0 +1,47 @@
+.w50{
+    width: calc(50% - 60px);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+}
+.h100{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+.name{
+    width: 100%;
+}
+.ul{
+    padding-right: 10px;
+    column-fill: auto;
+    column-count: 2;
+    height: 100%;
+}
+.color{
+    color: #00CCCC;
+}
+
+.list{
+    width: calc(50% - (36px / 2));
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.listW100{
+    width: 100%;
+    padding-bottom: 16px;
+}
+.total{
+    width: 100%;
+}
+.totalName{
+
+}
+.totalNum{
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
