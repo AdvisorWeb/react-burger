@@ -1,4 +1,4 @@
-import React, {ReactElement, ReactNode} from "react";
+import React, {ReactElement} from "react";
 import styles from "../pages/History/style.module.css";
 import {v4 as uuidv4} from "uuid";
 import {TItem} from "./tsTypes";
@@ -64,9 +64,9 @@ export const initScroll = (scrollContainer: HTMLElement | null, negativeItems: (
     }, 0)
 }
 
-export const itemImages = (array: string[], items: TItem[]): ReactNode => {
+export const itemImages = (array: string[], items: (TItem | null)[]): React.ReactNode => {
     return array.map((id: string) => {
-        const item = items.filter(el => el._id === id)[0];
+        const item = items.filter(el => el && el._id === id)[0];
         return (
             item && <div className={styles.imgBg} key={uuidv4()}>
                 <img className={styles.img} src={item.image} alt=""/>
@@ -75,11 +75,11 @@ export const itemImages = (array: string[], items: TItem[]): ReactNode => {
     });
 }
 
-export const itemPrice = (array: string[], items: TItem[]): number => {
+export const itemPrice = (array: string[], items: (TItem | null)[]): number => {
     let price = 0
     let bun = false
-    array.map((id: string) => {
-        const item = items.filter(el => el._id === id)[0]
+    array.forEach((id: string) => {
+        const item = items.filter(el => el && el._id === id)[0]
        if( item){
            if (item.type === 'bun') {
                if (!bun) {

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./style.module.css";
 import {NavLink} from "react-router-dom";
 import {logOut} from "../../services/actions/authAction";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../services/store";
 
 const Sidebar = () => {
     const dispatch = useDispatch()

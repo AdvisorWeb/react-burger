@@ -7,6 +7,7 @@ import {
 } from './constant'
 import {AppDispatch, AppThunk} from "../types";
 import {postOrder} from "../../utils/api";
+import {TOrderData} from "../reducers/orderReducer";
 
 export interface IGetOrderRequestAction {
     readonly type: typeof GET_ORDER_REQUEST
@@ -18,10 +19,10 @@ export const getOrderRequest = (): IGetOrderRequestAction => ({
 
 export interface IGetOrderSuccessAction {
     readonly type: typeof GET_ORDER_SUCCESS
-    readonly data: Response
+    readonly data: TOrderData
 }
 
-export const getOrderSuccess = (data: Response): IGetOrderSuccessAction => ({
+export const getOrderSuccess = (data: TOrderData): IGetOrderSuccessAction => ({
     type: GET_ORDER_SUCCESS,
     data
 })

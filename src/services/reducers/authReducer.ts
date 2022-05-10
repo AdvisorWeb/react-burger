@@ -63,12 +63,13 @@ const initialState: TAuthState = {
     }
 };
 
-export const authReducer = (state = initialState, action: TAuthActions) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case SIGN_USER_REQUEST: {
             return {
                 ...state,
                 'auth': {
+                    ...state.auth,
                     'request': true,
                     'error': false,
                 }
@@ -96,7 +97,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     ...state.auth,
                     'request': false,
                     'error': true,
-                    'errorMessage': action.error,
+                    // 'errorMessage': action.error,
                 }
             };
         }
@@ -132,7 +133,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     ...state.auth,
                     'error': true,
                     'request': false,
-                    'errorMessage': action.error
+                    // 'errorMessage': action.error
                 }
             };
         }
@@ -166,7 +167,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     ...state.auth,
                     "request": false,
                     'error': true,
-                    'errorMessage': action.error,
+                    // 'errorMessage': action.error,
                 }
             };
         }
@@ -202,7 +203,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     ...state.auth,
                     "request": false,
                     'error': true,
-                    'errorMessage': action.error
+                    // 'errorMessage': action.error
                 }
             };
         }
@@ -313,7 +314,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     sendingEmail: false,
                     request: false,
                     error: true,
-                    errorMessage: action.error
+                    // errorMessage: action.error
                 }
             };
         }
@@ -346,7 +347,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
                     sendingEmail: true,
                     request: false,
                     error: true,
-                    errorMessage: action.error
+                    // errorMessage: action.error
                 }
             };
         }

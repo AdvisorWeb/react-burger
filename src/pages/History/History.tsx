@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
 import {Link, Redirect, useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {IStore} from "../../utils/tsTypes";
+import {useDispatch, useSelector} from "../../services/store";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {Scrollbar} from "smooth-scrollbar-react";
-import { wsConnectionStart} from "../../services/actions/wsActions";
+import {wsConnectionStart} from "../../services/actions/wsActions";
 import {getCookie, getStatus, initScroll, itemImages, itemPrice, orderUrl} from "../../utils/consts";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -16,9 +15,9 @@ export const History = () => {
     const location = useLocation();
     const dispatch = useDispatch()
     const scrollContainer = React.useRef(null);
-    const {authorization, authorizationCheck} = useSelector((state: IStore) => state.authState)
-    const {wsConnected, orders, personal, isLoaded} = useSelector((store: IStore) => store.ws)
-    const {items} = useSelector((store: IStore) => store.info)
+    const {authorization, authorizationCheck} = useSelector(state => state.authState)
+    const {wsConnected, orders, personal, isLoaded} = useSelector(store => store.ws)
+    const {items} = useSelector(store => store.info)
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
@@ -26,7 +25,7 @@ export const History = () => {
 
 
     useEffect(() => {
-        if(authorizationCheck && authorization){
+        if (authorizationCheck && authorization) {
             const url = `${orderUrl}?token=${getCookie('token')}`
             const bool = (!personal || !wsConnected)
 
@@ -47,14 +46,14 @@ export const History = () => {
 
     return (
         <div className={`${styles.profileWrp}`}>
-            <Sidebar />
+            <Sidebar/>
             {
                 isLoaded
-                    ?  <div className={`${styles.historyWrp}`}  ref={scrollContainer}>
+                    ? <div className={`${styles.historyWrp}`} ref={scrollContainer}>
                         {
                             orders && !orders.length
                                 ? <p>Нет заказов</p>
-                                :  <Scrollbar className={`${styles.h100} mr-4`}>
+                                : <Scrollbar className={`${styles.h100} mr-4`}>
                                     {
                                         orders && orders.map((order) => {
                                             return (
@@ -76,22 +75,23 @@ export const History = () => {
                                                         <div className="text text_type_main-medium  pb-2">
                                                             {order.name}
                                                         </div>
-                                                        <div className={`${order.status === 'done' && styles.color} text text_type_main-default pb-6`}>
+                                                        <div
+                                                            className={`${order.status === 'done' && styles.color} text text_type_main-default pb-6`}>
                                            <span>
-                                               { getStatus(order.status) }
+                                               {getStatus(order.status)}
                                            </span>
                                                         </div>
                                                         <div className={`${styles.feedItemWrp}`}>
                                                             <div className={`${styles.feedImg}`}>
                                                                 {
-                                                                    itemImages(order.ingredients, items)
+                                                                    items && itemImages(order.ingredients, items)
                                                                 }
 
                                                             </div>
                                                             <div className={`${styles.price} pl-6`}>
                                             <span className='pr-2 text text_type_digits-default'>
                                                 {
-                                                    itemPrice(order.ingredients, items)
+                                                    items && itemPrice(order.ingredients, items)
                                                 }
                                             </span>
                                                                 <CurrencyIcon type="primary"/>
@@ -106,7 +106,7 @@ export const History = () => {
                         }
 
                     </div>
-                    : <Loader />
+                    : <Loader/>
             }
         </div>
     );

@@ -2,16 +2,15 @@ import React, {useEffect} from 'react';
 import FeedItems from "../../components/FeedItems/FeedItems";
 import {feedUrl} from "../../utils/consts";
 import { wsConnectionStart} from "../../services/actions/wsActions";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store";
 import FeedBoard from "../../components/FeedBoard/FeedBoard";
 
 import styles from './style.module.css'
-import {IStore} from "../../utils/tsTypes";
 import Loader from "../../components/Loader/Loader";
 
 const Feed = () => {
     const dispatch = useDispatch()
-    const {wsConnected, personal, isLoaded} = useSelector((store: IStore) => store.ws)
+    const {wsConnected, personal, isLoaded} = useSelector(store => store.ws)
 
     useEffect(() => {
         (!wsConnected || personal) && dispatch(wsConnectionStart(feedUrl, false))

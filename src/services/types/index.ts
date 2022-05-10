@@ -6,6 +6,7 @@ import { TConstructorItems} from '../actions/constructorAction';
 import { TOrderActions} from '../actions/oderAction';
 import {TWsActions} from "../actions/wsActions";
 import {store} from "../store";
+import {rootReducer} from "../reducers";
 
 type TApplicationActions =
     | TItemsActions
@@ -15,7 +16,15 @@ type TApplicationActions =
     | TWsActions
     ;
 
-export type RootState = ReturnType<typeof store.getState>
+// export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export type AppThunk<ReturnType = void> = ActionCreator< ThunkAction<ReturnType, Action, RootState, TApplicationActions>>;
+
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//     ReturnType,
+//     RootState,
+//     unknown,
+//     TApplicationActions
+//     >;

@@ -1,10 +1,8 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/store";
 import {useLocation} from "react-router-dom";
 
 import Loader from "../Loader/Loader";
-
-import {IStore} from "../../utils/tsTypes";
 
 import styles from "./styles.module.css";
 
@@ -15,8 +13,8 @@ interface IngredientDetails {
 const IngredientDetails = ({inPage}: IngredientDetails) => {
     const location = useLocation()
     const cardId: string = location.pathname.replace('/ingredients/', '')
-    const {items, isLoading} = useSelector((state: IStore) => state.info)
-    const selectedObject = items.filter((item) => item._id === cardId).shift()
+    const {items, isLoading} = useSelector(state => state.info)
+    const selectedObject = items && items.filter((item) => item && item._id === cardId).shift()
 
     return (
         isLoading
@@ -24,7 +22,10 @@ const IngredientDetails = ({inPage}: IngredientDetails) => {
             : <div className={`${styles.wrp} pl-15 pr-15`}>
                 {inPage && <span className={`${styles.zag} text text_type_main-large`}> Детали ингредиента </span>}
                 <div className={` pl-5 pr-5 pb-4`}>
-                    <img src={selectedObject && selectedObject.image} className={`${styles.modalImg}`} alt=""/>
+                    {
+                        selectedObject &&  <img src={selectedObject.image} className={`${styles.modalImg}`} alt=""/>
+                    }
+
                 </div>
                 <div className={`${styles.modalName} pb-8 text text_type_main-medium`}>
                     {selectedObject && selectedObject.name}

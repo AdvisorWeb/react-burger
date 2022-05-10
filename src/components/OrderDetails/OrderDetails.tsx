@@ -1,15 +1,13 @@
 import React from 'react';
-import { useSelector} from "react-redux";
+import { useSelector} from "../../services/store";
 
 import Loader from "../Loader/Loader";
-
-import {IStore} from "../../utils/tsTypes";
 
 import styles from "./style.module.css";
 import popupImg from "../../images/done.png";
 
 const OrderDetails = () => {
-    const order = useSelector((state: IStore) => state.order)
+    const order = useSelector(state => state.order)
     const {isLoading, orderFailed, data} = order
     const content =
         !orderFailed
@@ -18,7 +16,7 @@ const OrderDetails = () => {
                     <div
                         className={`${styles.popupNumber}  text text_type_digits-large pb-8`}
                     >
-                        {data.order.number}
+                        {data && data.order.number}
                     </div>
                     <span
                         className={'text text_type_main-medium'}
@@ -48,5 +46,6 @@ const OrderDetails = () => {
         </div>
     );
 }
+
 
 export default OrderDetails;

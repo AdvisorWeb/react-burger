@@ -1,12 +1,12 @@
 import React, {ChangeEvent, FormEvent, MouseEvent, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {NavLink, Redirect, useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "../../services/store";
+import { Redirect, useLocation} from "react-router-dom";
 
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
-import {logOut, getUser, refreshInfo} from "../../services/actions/authAction";
+import { getUser, refreshInfo} from "../../services/actions/authAction";
 import Loader from "../../components/Loader/Loader";
 
-import {IStore, TInputState} from "../../utils/tsTypes";
+import {TInputState} from "../../utils/tsTypes";
 
 import styles from './styles.module.css'
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -14,8 +14,8 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 const Profile = () => {
     const location = useLocation();
     const dispatch = useDispatch()
-    const {request, user} = useSelector((state: IStore) => state.authState.auth)
-    const {authorization, authorizationCheck} = useSelector((state: IStore) => state.authState)
+    const {request, user} = useSelector(state => state.authState.auth)
+    const {authorization, authorizationCheck} = useSelector(state => state.authState)
     const [edit, setEdit] = useState<boolean>(false)
     const [form, setForm] = useState<TInputState<string>>({
         email: '',

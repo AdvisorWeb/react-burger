@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "../../services/store";
 import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from "react-router-dom";
 
 import AppHeader from "../AppHeader/AppHeader";
@@ -11,8 +11,6 @@ import {Home, Login, ForgotPassword, Page404, Profile, Register, ResetPassword} 
 
 import {getItems} from '../../services/actions/mainInfoAction'
 import {refreshToken} from '../../services/actions/authAction'
-
-import {IStore} from "../../utils/tsTypes";
 
 import styles from './style.module.css'
 import Feed from "../../pages/Feed/Feed";
@@ -30,9 +28,9 @@ const App = () => {
     const location: TLocation = useLocation();
     const history = useHistory();
     const background = location.state && location.state.background;
-    const {isLoading, itemsFailed} = useSelector((store: IStore) => store.info)
+    const {isLoading, itemsFailed} = useSelector(store => store.info)
 
-    const { authorizationCheck} = useSelector((store: IStore) => store.authState)
+    const { authorizationCheck} = useSelector(store => store.authState)
 
     const closePopup = (): void => {
         history.goBack();

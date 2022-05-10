@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef} from 'react';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/store";
 
 import {Scrollbar} from 'smooth-scrollbar-react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import CardIngredient from '../CardIngredient/CardIngredient'
 
-import {IStore} from "../../utils/tsTypes";
 import {initScroll} from '../../utils/consts'
 
 import styles from './styles.module.css'
@@ -14,7 +13,7 @@ import {ScrollStatus} from "smooth-scrollbar/interfaces";
 const BurgerIngredients = () => {
     const [currentTab, setCurrentTab] = React.useState<string | null>(null)
     const scrollContainer = React.useRef(null);
-    const {items} = useSelector((store: IStore) => store.info)
+    const {items} = useSelector(store => store.info)
 
     const category = useMemo(
         () => {
@@ -22,17 +21,17 @@ const BurgerIngredients = () => {
                 {
                     type: "bun",
                     typeName: 'Булки',
-                    items: items.filter(item => item.type === "bun")
+                    items: items && items.filter(item => item && item.type === "bun")
                 },
                 {
                     type: "main",
                     typeName: 'Начинки',
-                    items: items.filter(item => item.type === "main")
+                    items: items && items.filter(item => item && item.type === "main")
                 },
                 {
                     type: "sauce",
                     typeName: 'Соусы',
-                    items: items.filter(item => item.type === "sauce")
+                    items: items && items.filter(item => item && item.type === "sauce")
                 }
             ]
         }, [items]
@@ -112,9 +111,9 @@ const BurgerIngredients = () => {
                                             {item.typeName}
                                         </h3>
                                         {
-                                            item.items.map((card) =>
+                                            item.items && item.items.map((card) =>
+                                                card &&
                                                 <CardIngredient
-                                                    // type={item.type}
                                                     card={card}
                                                     key={card._id}
                                                 />

@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store";
 import {Link} from "react-router-dom";
 
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,7 +7,7 @@ import Loader from "../../components/Loader/Loader";
 
 import {registerUser} from '../../services/actions/authAction'
 
-import {IStore, TInputState} from "../../utils/tsTypes";
+import {TInputState} from "../../utils/tsTypes";
 import {errorProcessing} from "../../utils/consts";
 
 import styles from './styles.module.css'
@@ -15,7 +15,7 @@ import styles from './styles.module.css'
 
 const Register = () => {
     const dispatch = useDispatch()
-    const {request, error, errorMessage} = useSelector((state: IStore) => state.authState.auth)
+    const {request, error, errorMessage} = useSelector(state => state.authState.auth)
     const [user, setUser] = useState<TInputState<string>>({
         "email": "",
         "password": "",

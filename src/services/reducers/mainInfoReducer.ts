@@ -11,20 +11,20 @@ import {TItemsActions} from '../actions/mainInfoAction'
 import {TItem} from "../../utils/tsTypes";
 
 export type TItemsState = {
-    items: (TItem | null)[]
+    items: (TItem)[] | null
     itemsRequest: boolean,
     itemsFailed: boolean,
     isLoading: boolean
 };
 
 const initialState: TItemsState = {
-    items: [],
+    items: null,
     itemsRequest: false,
     itemsFailed: false,
     isLoading: true
 };
 
-export const mainInfoReducer = (state = initialState, action: TItemsActions) => {
+export const mainInfoReducer = (state = initialState, action: TItemsActions): TItemsState => {
     switch (action.type) {
         case GET_ITEMS_REQUEST: {
             return {
@@ -46,7 +46,7 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions) => 
         case ADD_ITEMS_BUN_COUNT : {
             return {
                 ...state,
-                items: state.items.map(item => {
+                items: state.items && state.items.map(item => {
                     if (item && item.type === "bun") {
                         if (item._id === action.card._id) {
                             return {...item, count: 2}
@@ -61,7 +61,7 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions) => 
         case ADD_ITEMS_OTHER_COUNT : {
             return {
                 ...state,
-                items: state.items.map(item => {
+                items: state.items && state.items.map(item => {
                     if (item && item._id === action.card._id) {
                         return {...item, count: item.count + 1}
                     }
@@ -72,7 +72,7 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions) => 
         case REMOVE_ITEMS_COUNT: {
             return {
                 ...state,
-                items: state.items.map(item => {
+                items: state.items && state.items.map(item => {
                     if (item && item._id === action.id) {
                         return {...item, count: item.count - 1}
                     }
@@ -81,11 +81,12 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions) => 
             };
         }
         case REFRESH_ITEMS_COUNT: {
+            const items = state.items && state.items.map(item => {
+                return {...item, count: 0}
+            })
             return {
                 ...state,
-                items: state.items.map(item => {
-                    return {...item, count: 0}
-                }),
+                items,
             };
         }
         case GET_ITEMS_FAILED: {

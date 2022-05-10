@@ -3,15 +3,14 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Scrollbar} from 'smooth-scrollbar-react';
 import styles from './style.module.css'
 import {initScroll, itemImages, itemPrice} from "../../utils/consts";
-import {useSelector} from "react-redux";
-import {IStore} from "../../utils/tsTypes";
+import {useSelector} from "../../services/store";
 import {Link, useLocation} from "react-router-dom";
 
 export const FeedItems = () => {
     const location = useLocation();
     const scrollContainer = React.useRef(null);
-    const {orders} = useSelector((store: IStore) => store.ws)
-    const {items} = useSelector((store: IStore) => store.info)
+    const {orders} = useSelector(store => store.ws)
+    const {items} = useSelector(store => store.info)
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
@@ -45,14 +44,14 @@ export const FeedItems = () => {
                                         <div className={`${styles.feedItemWrp}`}>
                                             <div className={`${styles.feedImg}`}>
                                                 {
-                                                    order.ingredients && itemImages(order.ingredients, items)
+                                                    items && order.ingredients && itemImages(order.ingredients, items)
                                                 }
 
                                             </div>
                                             <div className={`${styles.price} pl-6`}>
                                             <span className='pr-2 text text_type_digits-default'>
                                                 {
-                                                    itemPrice(order.ingredients, items)
+                                                    items && order.ingredients && itemPrice(order.ingredients, items)
                                                 }
                                             </span>
                                                 <CurrencyIcon type="primary"/>

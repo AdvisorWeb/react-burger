@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState, useRef, FormEvent, MouseEvent} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store";
 import {useDrop} from 'react-dnd';
 import {Redirect} from 'react-router-dom'
 
@@ -15,7 +15,7 @@ import {REMOVE_ITEMS_COUNT, REFRESH_ITEMS_COUNT} from '../../services/actions/co
 import {getOrder} from '../../services/actions/oderAction'
 
 import {initScroll} from '../../utils/consts'
-import {IStore, TItem} from '../../utils/tsTypes'
+import {TItem} from '../../utils/tsTypes'
 
 import styles from './styles.module.css'
 
@@ -25,8 +25,8 @@ const BurgerConstructor = () => {
     const scrollContainer = useRef(null);
     const negativeItems = useRef<(HTMLElement | null)[]>([]);
     const [isPopup, setIsPopup] = useState<boolean>(false)
-    const constructorItems = useSelector((state: IStore) => state.constructorItems)
-    const {authorization} = useSelector((state: IStore) => state.authState)
+    const constructorItems = useSelector(state => state.constructorItems)
+    const {authorization} = useSelector(state => state.authState)
     const [redirectTo, setRedirectTo] = useState<boolean>(false)
 
     const [, dropTarget] = useDrop({
@@ -52,12 +52,13 @@ const BurgerConstructor = () => {
         hasDeleteIcon && dispatch({type: REMOVE_ITEMS_COUNT, id})
     }
     type TPost = {
-        order: string[]
+        order: (string | null)[]
     }
     const submitData = (e: FormEvent) => {
         e.preventDefault()
+
         const postRequest: TPost = {
-            order: basketItemsConcat.map((item: TItem) => item._id)
+            order: basketItemsConcat.map((item) => item && item._id)
         }
         dispatch(getOrder(postRequest))
     }
@@ -73,13 +74,16 @@ const BurgerConstructor = () => {
     }
 
     const basketItemsConcat = useMemo(
-        (): TItem[] => {
+        (): (TItem | null)[] => {
             return [...constructorItems.bun, ...constructorItems.bun, ...constructorItems.other]
         }, [constructorItems]
     )
     const totalPrice = useMemo(
         () => {
-            return basketItemsConcat.reduce((sum, item) => sum + item.price, 0)
+            return basketItemsConcat.reduce((sum: number, item) =>{
+                return item ? sum + item.price : 0
+            }, 0)
+
         }, [basketItemsConcat]
     )
 
@@ -139,6 +143,7 @@ const BurgerConstructor = () => {
                                 constructorItems.other[0] &&
                                 constructorItems.other.map((item, index) => {
                                     return (
+                                        item &&
                                         <BurgerConstructorDraggable
                                             item={item}
                                             index={index}

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {IStore, TItem} from "../../utils/tsTypes";
+import {useDispatch, useSelector} from "../../services/store";
+import {TItem} from "../../utils/tsTypes";
 import Loader from "../Loader/Loader";
 import { wsConnectionStart} from "../../services/actions/wsActions";
-import {feedUrl, getCookie, initScroll, orderUrl} from "../../utils/consts";
+import {feedUrl, getCookie, orderUrl} from "../../utils/consts";
 
 import styles from './style.module.css'
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -32,8 +32,8 @@ const OrderInfo = ({inPage}: IOrderInfo) => {
 
     const scrollContainer = React.useRef(null);
 
-    const {items} = useSelector((store: IStore) => store.info)
-    const cloneItems = items.map(item => JSON.parse(JSON.stringify(item)))
+    const {items} = useSelector(store => store.info)
+    const cloneItems = items && items.map(item => JSON.parse(JSON.stringify(item)))
 
     const toReplace: string = location.pathname.includes('profile') ?`/profile/orders/` : '/feed/'
     const url: string = location.pathname.includes('profile') ? `${orderUrl}?token=${getCookie('token')}` : feedUrl
@@ -41,13 +41,13 @@ const OrderInfo = ({inPage}: IOrderInfo) => {
 
     const orderId: string = location.pathname.replace(toReplace, '')
 
-    const {orders, wsConnected} = useSelector((state: IStore) => state.ws)
-    const selectedObject = orders.filter(el => el._id == orderId).shift()
+    const {orders, wsConnected} = useSelector(state => state.ws)
+    const selectedObject = orders.filter(el => el._id === orderId).shift()
 
     let ingredients: (TItem)[] = []
-    selectedObject && selectedObject.ingredients.map((id) => {
+    selectedObject && selectedObject.ingredients.forEach((id) => {
         let flag = true
-        const item = cloneItems.filter(el => el._id === id).shift()
+        const item = cloneItems && cloneItems.filter(el => el._id === id).shift()
         if (item) {
             if (item.type === "bun") {
                 item.count = 2
@@ -71,7 +71,7 @@ const OrderInfo = ({inPage}: IOrderInfo) => {
     const itemPrice = (): number => {
         let price = 0
         ingredients.map((item) => {
-            price += item.price * item.count;
+            return price += item.price * item.count;
         })
         return price
     }

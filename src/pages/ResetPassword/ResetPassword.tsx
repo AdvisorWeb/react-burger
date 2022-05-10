@@ -1,18 +1,17 @@
 import React, {useState, ChangeEvent, FormEvent} from 'react';
 import {Link, Redirect} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store";
 
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {postResetPassword} from "../../services/actions/authAction";
-
 import {errorProcessing} from "../../utils/consts";
-import {IStore} from "../../utils/tsTypes";
 
 
 const ResetPassword = () => {
-    const dispath = useDispatch()
-    const {sendingEmail, error, errorMessage} = useSelector((state: IStore) => state.authState.auth)
+    const dispatch = useDispatch()
+    const {sendingEmail, error, errorMessage} = useSelector(state => state.authState.auth)
+
     const [form, setForm] = useState({
         'password': '',
         'token': ''
@@ -26,9 +25,8 @@ const ResetPassword = () => {
 
     const onSubmit = (e:FormEvent) => {
         e.preventDefault()
-        dispath(postResetPassword(form))
+        dispatch(postResetPassword(form))
     }
-
 
     if (!sendingEmail) {
         return (
@@ -39,7 +37,6 @@ const ResetPassword = () => {
             />
         );
     }
-
 
     return (
         <div>

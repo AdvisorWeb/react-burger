@@ -18,7 +18,7 @@ const initialState: TItemsConstructorState = {
     'other': [],
 };
 
-export const itemsConstructor = (state = initialState, action: TConstructorItems) => {
+export const itemsConstructor = (state = initialState, action: TConstructorItems): TItemsConstructorState => {
     switch (action.type) {
         case ADD_ITEM_BUN: {
             return {

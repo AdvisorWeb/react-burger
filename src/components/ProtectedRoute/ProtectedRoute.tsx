@@ -1,12 +1,11 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/store";
 
-import {IStore} from "../../utils/tsTypes";
 
 export const ProtectedRoute: ({children, ...rest}: { children: any; [p: string]: any }) => false | any = ({children, ...rest}) => {
 
-    const {authorization, authorizationCheck} = useSelector((state: IStore) => state.authState)
+    const {authorization, authorizationCheck} = useSelector(state => state.authState)
 
     const toPath = (rest: any) => {
         if (rest.location.state) {

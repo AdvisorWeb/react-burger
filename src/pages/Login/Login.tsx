@@ -1,19 +1,17 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/store";
 
 import {Input, Button, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import Loader from "../../components/Loader/Loader";
 import {signIn} from "../../services/actions/authAction";
-
-import {IStore} from "../../utils/tsTypes";
 
 import styles from "./styles.module.css";
 
 
 const Login = () => {
     const dispatch = useDispatch()
-    const {request} = useSelector((state: IStore) => state.authState.auth)
+    const {request} = useSelector(state=> state.authState.auth)
 
     const [user, setUser] = useState({
         "email": "",

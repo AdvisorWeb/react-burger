@@ -12,8 +12,6 @@ import {
     REFRESH_ITEMS
 } from './constant'
 
-
-
 export interface IAddItemBunAction {
     readonly type: typeof ADD_ITEM_BUN;
     payload: {
@@ -34,7 +32,6 @@ export const addItemBunCountAction = ( card: TItem): IAddItemBunCountAction => (
     type: ADD_ITEMS_BUN_COUNT,
     card
 });
-
 
 export interface IAddItemOtherAction {
     readonly type: typeof ADD_ITEM_OTHER;
@@ -84,25 +81,11 @@ export const addItemConstructor = (card: TItem) => {
     const key: string = uuidv4()
     return function (dispatch: AppDispatch) {
         if(card.type === 'bun'){
-            // dispatch({
-            //     type: ADD_ITEM_BUN,
-            //     payload: {
-            //         card: {...card, key, count: 2},
-            //     }
-            // })
             dispatch(addItemBunAction(card, key))
-            // dispatch({type: ADD_ITEMS_BUN_COUNT, card})
             dispatch(addItemBunCountAction(card))
         }
         else{
-            // dispatch({
-            //     type: ADD_ITEM_OTHER,
-            //     payload: {
-            //         card: {...card, key},
-            //     }
-            // })
             dispatch(addItemOtherAction(card, key))
-            // dispatch({type: ADD_ITEMS_OTHER_COUNT, card})
             dispatch(addItemOtherCountAction(card))
         }
     }

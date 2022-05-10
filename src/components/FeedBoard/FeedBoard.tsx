@@ -1,9 +1,8 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {Scrollbar} from 'smooth-scrollbar-react';
 import {v4 as uuidv4} from "uuid";
 import styles from './style.module.css'
-import {useSelector} from "react-redux";
-import {IStore, TItem} from "../../utils/tsTypes";
+import {useSelector} from "../../services/store";
 import {getArray, initScroll} from "../../utils/consts";
 import Loader from "../Loader/Loader";
 
@@ -18,7 +17,7 @@ export type TOrder = {
 }
 
 const FeedBoard = () => {
-    const {wsConnected, total, totalToday, orders} = useSelector((store: IStore) => store.ws)
+    const {wsConnected, total, totalToday, orders} = useSelector(store => store.ws)
     const scrollContainer = React.useRef(null);
 
     const orderDone = useMemo(

@@ -345,9 +345,7 @@ export const logOut: AppThunk = () => {
     };
 };
 
-// export const refreshToken: AppThunk = (form: (TForm | null) = null) => {
 export const refreshToken: AppThunk | any = (form: (TForm | null) = null) => {
-    console.log('refreshToken')
     return function (dispatch: AppDispatch) {
         dispatch(refreshCookiesRequest());
         refreshTokenRequest()
@@ -366,7 +364,6 @@ export const refreshToken: AppThunk | any = (form: (TForm | null) = null) => {
             });
     }
 }
-
 export const postForgotPassword: AppThunk = (data: any) => {
     return function (dispatch: AppDispatch) {
         dispatch(forgotPasswordRequest());
