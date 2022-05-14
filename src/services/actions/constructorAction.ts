@@ -14,15 +14,11 @@ import {
 
 export interface IAddItemBunAction {
     readonly type: typeof ADD_ITEM_BUN;
-    payload: {
-        card: TItem
-    }
+    payload: TItem
 }
 export const addItemBunAction = ( card: TItem, key: string): IAddItemBunAction => ({
     type: ADD_ITEM_BUN,
-    payload: {
-        card: {...card, key, count: 2},
-    }
+    payload: {...card, key, count: 2}
 });
 export interface IAddItemBunCountAction {
     readonly type: typeof ADD_ITEMS_BUN_COUNT;
@@ -35,16 +31,13 @@ export const addItemBunCountAction = ( card: TItem): IAddItemBunCountAction => (
 
 export interface IAddItemOtherAction {
     readonly type: typeof ADD_ITEM_OTHER;
-    payload: {
-        card: TItem
-    }
+    payload: TItem
 }
 export const addItemOtherAction = ( card: TItem, key: string): IAddItemOtherAction => ({
     type: ADD_ITEM_OTHER,
-    payload: {
-        card: {...card, key},
-    }
+    payload: {...card, key}
 });
+
 export interface IAddItemOtherCountAction {
     readonly type: typeof ADD_ITEMS_OTHER_COUNT;
     card: TItem
@@ -56,12 +49,17 @@ export const addItemOtherCountAction = ( card: TItem): IAddItemOtherCountAction 
 
 export interface IRemoveItemAction {
     readonly type: typeof REMOVE_ITEM,
-    readonly key: string
+    readonly payload: {
+        key: string
+    }
 }
 export interface IMoveItemAction {
     readonly type: typeof MOVE_ITEM,
-    readonly hoverIndex: number
-    readonly dragIndex: number
+    readonly payload: {
+        readonly hoverIndex: number
+        readonly dragIndex: number
+    }
+
 }
 export interface IRefreshItemsAction {
     readonly type: typeof REFRESH_ITEMS,

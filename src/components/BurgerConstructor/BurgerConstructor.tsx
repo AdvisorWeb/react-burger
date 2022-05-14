@@ -37,7 +37,7 @@ const BurgerConstructor = () => {
     });
 
     const moveCard = (dragIndex: number, hoverIndex: number) => {
-        dispatch({type: MOVE_ITEM, hoverIndex, dragIndex})
+        dispatch({type: MOVE_ITEM, payload: {hoverIndex, dragIndex}})
     };
 
 
@@ -48,7 +48,7 @@ const BurgerConstructor = () => {
 
         const hasDeleteIcon = path.some((item: HTMLElement) => item.classList && item.classList.contains('constructor-element__action'))
 
-        hasDeleteIcon && dispatch({type: REMOVE_ITEM, key, id})
+        hasDeleteIcon && dispatch({type: REMOVE_ITEM, payload: {key}})
         hasDeleteIcon && dispatch({type: REMOVE_ITEMS_COUNT, id})
     }
     type TPost = {
@@ -95,7 +95,7 @@ const BurgerConstructor = () => {
 
     const modal = useMemo(
         () => <Modal onClick={togglePopup}><OrderDetails/></Modal>
-        , [togglePopup, setIsPopup]
+        , [togglePopup]
     )
 
     useEffect(() => {
@@ -118,6 +118,7 @@ const BurgerConstructor = () => {
                 <div
                     className={`${emptyBasket} pr-4 `}
                     ref={dropTarget}
+                    data-cy={'dropTarget'}
                 >
                     <div className="pb-4">
                         {
@@ -176,6 +177,7 @@ const BurgerConstructor = () => {
                 </div>
                 <div
                     className={`${styles.footer} pt-10`}
+                    data-cy={'submitOrder'}
                     ref={(ref) => !negativeItems.current.includes(ref) && negativeItems.current.push(ref)}
                 >
                 <span className={`${styles.price} mr-10`}>
@@ -189,6 +191,7 @@ const BurgerConstructor = () => {
                         onClick={togglePopup}
                         type="primary"
                         size="large"
+
                         disabled={totalPrice === 0}
                     >Оформить заказ</Button>
                 </div>

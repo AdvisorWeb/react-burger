@@ -14,7 +14,7 @@ export const FeedItems = () => {
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
-    }, [initScroll]);
+    }, []);
 
     return (
         <div className={`${styles.feedItems}`} ref={scrollContainer}>

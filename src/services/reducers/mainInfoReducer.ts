@@ -90,7 +90,11 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions): TI
             };
         }
         case GET_ITEMS_FAILED: {
-            return state;
+            return {
+                ...state,
+                items: null,
+                itemsFailed: false,
+            };
         }
         default: {
             return state;

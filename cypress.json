@@ -1,0 +1,7 @@
+{
+  "projectId": "dpxp66",
+  "viewportWidth": 1366,
+  "viewportHeight": 700,
+  "chromeWebSecurity": false,
+  "baseUrl": "http://localhost:3000"
+}

@@ -21,7 +21,7 @@ export const History = () => {
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
-    }, [initScroll, isLoaded]);
+    }, [isLoaded]);
 
 
     useEffect(() => {

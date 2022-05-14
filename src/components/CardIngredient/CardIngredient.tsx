@@ -29,6 +29,7 @@ const CardIngredient = ({card}: ICard) => {
             ref={dragRef}
             style={{opacity}}
             className={`${styles.item} mb-8`}
+            data-cy='element'
             to={{
                 pathname: `/ingredients/${card._id}`,
                 state: {background: location},
@@ -41,7 +42,7 @@ const CardIngredient = ({card}: ICard) => {
                 <span className={'pr-2 text text_type_digits-default'}>{card.price}</span>
                 <CurrencyIcon type="primary"/>
             </div>
-            <div className={styles.name}> {card.name} </div>
+            <div className={styles.name} data-cy={'element-name'}> {card.name} </div>
         </Link>
 
     );

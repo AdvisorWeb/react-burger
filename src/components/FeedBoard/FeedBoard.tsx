@@ -44,7 +44,7 @@ const FeedBoard = () => {
 
     useEffect(() => {
         initScroll(scrollContainer.current, [])
-    }, [initScroll, orders]);
+    }, [orders]);
 
     return (
         orders.length

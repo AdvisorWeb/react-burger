@@ -23,24 +23,25 @@ export const itemsConstructor = (state = initialState, action: TConstructorItems
         case ADD_ITEM_BUN: {
             return {
                 ...state,
-                'bun': [{...action.payload.card}]
+                'bun': [{...action.payload}]
             };
         }
         case ADD_ITEM_OTHER: {
             return {
                 ...state,
-                'other': [...state.other, {...action.payload.card}]
+                'other': [...state.other, {...action.payload}]
             };
         }
         case REMOVE_ITEM: {
+            const key = action.payload.key
             return {
                 ...state,
-                'other': state.other.filter((item) => item && item.key !== action.key)
+                'other': state.other.filter((item) => item && item.key !== key)
             };
         }
         case MOVE_ITEM: {
             const ingredients = [...state.other];
-            ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
+            ingredients.splice(action.payload.hoverIndex, 0, ingredients.splice(action.payload.dragIndex, 1)[0]);
             return {
                 ...state,
                 'other': ingredients

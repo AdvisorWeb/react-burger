@@ -113,7 +113,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
             };
         }
         case POST_USER_SUCCESS: {
-            const {accessToken, refreshToken, user} = action.data
+            const {accessToken, refreshToken, user} = action.payload
             return {
                 ...state,
                 "authorization" : true,
@@ -121,7 +121,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
                     ...state.auth,
                     'request': false,
                     'accessToken': accessToken,
-                    'refreshToken':refreshToken,
+                    'refreshToken': refreshToken,
                     "user": user
                 }
             };
@@ -179,7 +179,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
                     ...state.auth,
                     "request": true,
                     'error': false,
-                    'errorMessage': '',
+                    // 'errorMessage': '',
                 }
             };
         }
@@ -351,7 +351,6 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
                 }
             };
         }
-
 
         default: {
             return state;

@@ -33,12 +33,13 @@ const Modal: FC<IModal> = ({name, onClick, children}) => {
             <div
                 className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`}
                 onClick={stopPropagation}
+                data-cy={'popup'}
             >
                 {
                     name && <div className={`${styles.modalName} text text_type_main-large`}> {name}</div>
                 }
 
-                <div className={styles.modalClose} onClick={onClick}>
+                <div className={styles.modalClose} onClick={onClick}  data-cy={'popup-close'}>
                     <CloseIcon type="primary"/>
                 </div>
 

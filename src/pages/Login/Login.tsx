@@ -42,9 +42,9 @@ const Login = () => {
         request
             ? <Loader />
             : <div>
-                <form className={'form'} onSubmit={submitForm}>
+                <form className={'form'} onSubmit={submitForm} data-cy={'loginForm'}>
                     <div className={`text text_type_main-medium mb-6`}>Вход</div>
-                    <div className={`formInput mb-6`}>
+                    <div className={`formInput mb-6`} data-cy={'loginEmail'}>
                         <Input
                             type={'text'}
                             placeholder={'E-mail'}
@@ -57,7 +57,7 @@ const Login = () => {
 
                         />
                     </div>
-                    <div className={`formInput mb-6`}>
+                    <div className={`formInput mb-6`} data-cy={'loginPassword'}>
                         <PasswordInput
                             onChange={e => onChange(e)}
                             value={user.password}
@@ -68,6 +68,7 @@ const Login = () => {
                     <Button type="primary" size="medium">
                         Войти
                     </Button>
+
                     <div className="pt-20">
                         <div className={'pb-4 formLink text text_type_main-default text_color_inactive'}>
                             Вы — новый пользователь?

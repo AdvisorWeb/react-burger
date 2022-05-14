@@ -76,11 +76,11 @@ export const postUserRequest = (): IPostUserRequestAction => ({
 });
 export interface IPostUserSuccessAction {
     readonly type: "POST_USER_SUCCESS"
-    readonly data: TDataAccess;
+    readonly payload: TDataAccess;
 }
 export const postUserSuccess = (data: TDataAccess): IPostUserSuccessAction => ({
     type: POST_USER_SUCCESS,
-    data
+    payload: data
 });
 export interface IPostUserErrorAction {
     readonly type: typeof POST_USER_ERROR;

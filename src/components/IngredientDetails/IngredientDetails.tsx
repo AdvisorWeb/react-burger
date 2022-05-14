@@ -10,7 +10,7 @@ interface IngredientDetails {
     inPage: boolean
 }
 
-const IngredientDetails = ({inPage}: IngredientDetails) => {
+export const IngredientDetails = ({inPage}: IngredientDetails) => {
     const location = useLocation()
     const cardId: string = location.pathname.replace('/ingredients/', '')
     const {items, isLoading} = useSelector(state => state.info)
@@ -27,7 +27,7 @@ const IngredientDetails = ({inPage}: IngredientDetails) => {
                     }
 
                 </div>
-                <div className={`${styles.modalName} pb-8 text text_type_main-medium`}>
+                <div className={`${styles.modalName} pb-8 text text_type_main-medium`} data-cy={'popup-name'}>
                     {selectedObject && selectedObject.name}
                 </div>
                 <ul className={styles.modalTypes}>
