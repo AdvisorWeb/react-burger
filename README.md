@@ -6,6 +6,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `Link`
+
+https://advisorweb.github.io/react-burger/
+
+### `Technology`
+
+React, Redux, TypeScript and Web Socket
+
+### `Project description`
+
+The project was created during the course React.js
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -28,6 +40,10 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run deploy`
+
+For deploy project to GH pages
 
 ### `npm run eject`
 

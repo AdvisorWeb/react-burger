@@ -1,10 +1,10 @@
-import {orderReducer} from '../../services/reducers/orderReducer'
+import {orderReducer} from './orderReducer'
 
 import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED
-} from '../../services/actions/constant'
+} from '../actions/constant'
 
 describe('order reducer', () => {
     it('should return the initial state', () => {

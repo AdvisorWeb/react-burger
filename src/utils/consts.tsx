@@ -116,3 +116,46 @@ export const getArray = (status: string, array: TOrder[], arrayLength: number, b
         return false
     }
 }
+
+export const addCountObj = (array: TItem[]) => {
+    return array.map(item => {
+        return {...item, count: 0}
+    })
+}
+
+export const addCountBun = (array: TItem[], id: string) => {
+    return array.map(item => {
+        if (item && item.type === "bun") {
+            if (item._id === id) {
+                return {...item, count: 2}
+            } else {
+                return {...item, count: 0}
+            }
+        }
+        return item
+    })
+}
+
+export const addCountOther = (array: TItem[], id: string) => {
+    return array.map(item => {
+        if (item && item._id === id) {
+            return {...item, count: item.count + 1}
+        }
+        return item
+    })
+}
+
+export const removeCountOther = (array: TItem[], id: string) => {
+    return array.map(item => {
+        if (item && item._id === id) {
+            return {...item, count: item.count - 1}
+        }
+        return item
+    })
+}
+
+export const refreshCount = (array: TItem[]) => {
+    return array.map(item => {
+        return {...item, count: 0}
+    })
+}

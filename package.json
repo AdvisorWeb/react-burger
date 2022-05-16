@@ -2,6 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://advisorweb.github.io/react-burger/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/user-event": "^13.5.0",
@@ -34,6 +35,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
@@ -66,6 +69,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-cypress": "^2.12.1",
     "fetch-mock": "^9.11.0",
+    "gh-pages": "^4.0.0",
     "jest": "^28.1.0",
     "prop-types": "^15.8.1",
     "react-test-renderer": "^18.1.0",

@@ -1,4 +1,4 @@
-import {authReducer} from '../../services/reducers/authReducer'
+import {authReducer} from './authReducer'
 
 import {
     POST_USER_REQUEST,
@@ -25,11 +25,29 @@ import {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_ERROR
-} from '../../services/actions/constant'
-
+} from '../actions/constant'
 
 describe('authReducer', () => {
-
+    const payload = {
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken',
+        user: {
+            email: 'email',
+            name: 'name'
+        }
+    }
+    const requestAnswer = {
+        'auth': {
+            'error': false,
+            'request': true,
+        }
+    }
+    const errorAnswer = {
+        "auth": {
+            'error': true,
+            'request': false,
+        },
+    }
     test('should return the initial state', () => {
         expect(
             authReducer(undefined, {}))
@@ -58,12 +76,7 @@ describe('authReducer', () => {
                 type: SIGN_USER_REQUEST,
                 text: 'Run the tests'
             }))
-            .toEqual({
-                'auth': {
-                    'error': false,
-                    'request': true,
-                }
-            })
+            .toEqual(requestAnswer)
     })
     test('should handle POST_USER_REQUEST', () => {
         expect(
@@ -71,12 +84,7 @@ describe('authReducer', () => {
                 type: POST_USER_REQUEST,
                 text: 'Run the tests'
             }))
-            .toEqual({
-                'auth': {
-                    'error': false,
-                    'request': true,
-                }
-            })
+            .toEqual(requestAnswer)
     })
     test('should handle GET_USER_REQUEST', () => {
         expect(
@@ -84,12 +92,7 @@ describe('authReducer', () => {
                 type: GET_USER_REQUEST,
                 text: 'Run the tests'
             }))
-            .toEqual({
-                'auth': {
-                    'error': false,
-                    'request': true,
-                }
-            })
+            .toEqual(requestAnswer)
     })
     test('should handle REFRESH_USER_REQUEST', () => {
         expect(
@@ -97,12 +100,7 @@ describe('authReducer', () => {
                 type: REFRESH_USER_REQUEST,
                 text: 'Run the tests'
             }))
-            .toEqual({
-                'auth': {
-                    'error': false,
-                    'request': true,
-                }
-            })
+            .toEqual(requestAnswer)
     })
     test('should handle LOGOUT__USER_REQUEST', () => {
         expect(
@@ -110,12 +108,7 @@ describe('authReducer', () => {
                 type: LOGOUT__USER_REQUEST,
                 text: 'Run the tests'
             }))
-            .toEqual({
-                'auth': {
-                    'error': false,
-                    'request': true,
-                }
-            })
+            .toEqual(requestAnswer)
     })
     test('should handle REFRESH_COOKIES_REQUEST', () => {
         expect(
@@ -160,42 +153,24 @@ describe('authReducer', () => {
     })
 
     test('should handle SIGN_USER_SUCCESS', () => {
-        const data = {
-            accessToken: 'accessToken',
-            refreshToken: 'refreshToken',
-            user: {
-                email: 'email',
-                name: 'name'
-            }
-        }
         expect(
             authReducer([]
                 , {
                     type: SIGN_USER_SUCCESS,
                     text: 'Run the tests',
-                    data
+                    data: payload
                 }))
             .toEqual({
                 "auth":
                     {
-                        "accessToken": "accessToken",
+                       ...payload,
                         "error": false,
-                        "refreshToken": "refreshToken",
                         "request": false,
-                        "user": {"email": "email", "name": "name"}
                     },
                 "authorization": true
             })
     })
     test('should handle POST_USER_SUCCESS', () => {
-        const payload = {
-            accessToken: 'accessToken',
-            refreshToken: 'refreshToken',
-            user: {
-                email: 'email',
-                name: 'name'
-            }
-        }
         expect(
             authReducer([]
                 , {
@@ -205,13 +180,8 @@ describe('authReducer', () => {
                 }))
             .toEqual({
                 "auth": {
-                    "accessToken": "accessToken",
-                    "refreshToken": "refreshToken",
+                   ...payload,
                     "request": false,
-                    "user": {
-                        "email": "email",
-                        "name": "name",
-                    },
                 },
                 "authorization": true,
             })
@@ -343,12 +313,7 @@ describe('authReducer', () => {
                     type: POST_USER_ERROR,
                     text: 'Run the tests',
                 }))
-            .toEqual({
-                "auth": {
-                    'error': true,
-                    'request': false,
-                },
-            })
+            .toEqual(errorAnswer)
     })
     test('should handle SIGN_USER_ERROR', () => {
         expect(
@@ -357,12 +322,7 @@ describe('authReducer', () => {
                     type: SIGN_USER_ERROR,
                     text: 'Run the tests',
                 }))
-            .toEqual({
-                "auth": {
-                    'error': true,
-                    'request': false,
-                },
-            })
+            .toEqual(errorAnswer)
     })
     test('should handle GET_USER_ERROR', () => {
         expect(
@@ -373,10 +333,7 @@ describe('authReducer', () => {
                 }))
             .toEqual({
                 "authorization": false,
-                "auth": {
-                    'error': true,
-                    'request': false,
-                },
+                ...errorAnswer,
             })
     })
     test('should handle REFRESH_USER_ERROR', () => {
@@ -386,7 +343,7 @@ describe('authReducer', () => {
                     type: REFRESH_USER_ERROR,
                     text: 'Run the tests',
                 }))
-            .toEqual( {"auth": {"error": true, "request": false}})
+            .toEqual( errorAnswer)
     })
     test('should handle LOGOUT__USER_ERROR', () => {
 
@@ -396,12 +353,7 @@ describe('authReducer', () => {
                     type: LOGOUT__USER_ERROR,
                     text: 'Run the tests',
                 }))
-            .toEqual({
-                "auth": {
-                    "error": true,
-                    "request": false,
-                },
-            })
+            .toEqual(errorAnswer)
     })
     test('should handle REFRESH_COOKIES_ERROR', () => {
 
@@ -433,6 +385,4 @@ describe('authReducer', () => {
                 }))
             .toEqual({"auth": {"error": true, "request": false, "sendingEmail": true}})
     })
-
-
 })

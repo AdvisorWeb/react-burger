@@ -9,6 +9,7 @@ import {
 } from '../actions/constant'
 import {TItemsActions} from '../actions/mainInfoAction'
 import {TItem} from "../../utils/tsTypes";
+import {addCountBun, addCountObj, addCountOther, refreshCount, removeCountOther} from "../../utils/consts";
 
 export type TItemsState = {
     items: (TItem)[] | null
@@ -36,9 +37,7 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions): TI
             return {
                 ...state,
                 itemsFailed: false,
-                items: action.data.map(item => {
-                    return {...item, count: 0}
-                }),
+                items: addCountObj(action.data),
                 itemsRequest: false,
                 isLoading: false
             };
@@ -46,47 +45,25 @@ export const mainInfoReducer = (state = initialState, action: TItemsActions): TI
         case ADD_ITEMS_BUN_COUNT : {
             return {
                 ...state,
-                items: state.items && state.items.map(item => {
-                    if (item && item.type === "bun") {
-                        if (item._id === action.card._id) {
-                            return {...item, count: 2}
-                        } else {
-                            return {...item, count: 0}
-                        }
-                    }
-                    return item
-                }),
+                items: state.items && addCountBun(state.items, action.card._id)
             };
         }
         case ADD_ITEMS_OTHER_COUNT : {
             return {
                 ...state,
-                items: state.items && state.items.map(item => {
-                    if (item && item._id === action.card._id) {
-                        return {...item, count: item.count + 1}
-                    }
-                    return item
-                }),
+                items: state.items && addCountOther(state.items, action.card._id)
             };
         }
         case REMOVE_ITEMS_COUNT: {
             return {
                 ...state,
-                items: state.items && state.items.map(item => {
-                    if (item && item._id === action.id) {
-                        return {...item, count: item.count - 1}
-                    }
-                    return item
-                }),
+                items: state.items && removeCountOther(state.items, action.id)
             };
         }
         case REFRESH_ITEMS_COUNT: {
-            const items = state.items && state.items.map(item => {
-                return {...item, count: 0}
-            })
             return {
                 ...state,
-                items,
+                items:  state.items && refreshCount(state.items),
             };
         }
         case GET_ITEMS_FAILED: {

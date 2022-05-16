@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import FeedItems from "../../components/FeedItems/FeedItems";
 import {feedUrl} from "../../utils/consts";
-import { wsConnectionStart} from "../../services/actions/wsActions";
+import {wsConnectionClosed, wsConnectionStart} from "../../services/actions/wsActions";
 import {useDispatch, useSelector} from "../../services/store";
 import FeedBoard from "../../components/FeedBoard/FeedBoard";
 
@@ -14,6 +14,9 @@ const Feed = () => {
 
     useEffect(() => {
         (!wsConnected || personal) && dispatch(wsConnectionStart(feedUrl, false))
+        return () => {
+           dispatch(wsConnectionClosed())
+        }
     }, []);
 
     return (

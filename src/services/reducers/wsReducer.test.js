@@ -1,11 +1,11 @@
-import {wsReducer} from '../../services/reducers/wsReducer'
+import {wsReducer} from './wsReducer'
 
 import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE, WS_CONNECTION_START,
-} from '../../services/actions/constant';
+} from '../actions/constant';
 
 
 describe('wsReducer', ()=> {
@@ -16,6 +16,21 @@ describe('wsReducer', ()=> {
         totalToday: 0,
         personal: null,
         isLoaded: false
+    }
+    const payload = {
+        total: 100,
+        totalToday: 10000,
+        orders: [
+            {
+                _id:"627ebe25fa747e001bd47e04",
+                status:"done",
+                ingredients: ['ingredients', 'ingredients', "ingredients"],
+                name:"Spicy space краторный бургер",
+                createdAt:"2022-05-13T20:23:01.858Z",
+                updatedAt:"2022-05-13T20:23:02.120Z",
+                number:15372,
+            }
+        ]
     }
     test('should return the initial state', () => {
         expect(
@@ -79,23 +94,7 @@ describe('wsReducer', ()=> {
     })
 
     test('should handle WS_GET_MESSAGE', () => {
-        const payload = {
-            total: 100,
-            totalToday: 10000,
-            orders: [
-                {
-                    _id:"627ebe25fa747e001bd47e04",
-                    status:"done",
-                    ingredients: ['ingredients', 'ingredients', "ingredients"],
-                    name:"Spicy space краторный бургер",
-                    createdAt:"2022-05-13T20:23:01.858Z",
-                    updatedAt:"2022-05-13T20:23:02.120Z",
-                    number:15372,
-                }
 
-            ]
-
-        }
         expect(
             wsReducer(defaultState, {
                 type: WS_GET_MESSAGE,
@@ -104,10 +103,8 @@ describe('wsReducer', ()=> {
             }))
             .toEqual( {
                 ...defaultState,
+                ...payload,
                 wsConnected: true,
-                orders: payload.orders,
-                total: payload.total,
-                totalToday: payload.totalToday,
                 isLoaded: true
             })
     })

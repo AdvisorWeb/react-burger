@@ -4,7 +4,7 @@ import {Link, Redirect, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "../../services/store";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {Scrollbar} from "smooth-scrollbar-react";
-import {wsConnectionStart} from "../../services/actions/wsActions";
+import {wsConnectionClosed, wsConnectionStart} from "../../services/actions/wsActions";
 import {getCookie, getStatus, initScroll, itemImages, itemPrice, orderUrl} from "../../utils/consts";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -30,6 +30,9 @@ export const History = () => {
             const bool = (!personal || !wsConnected)
 
             bool && dispatch(wsConnectionStart(url, true))
+        }
+        return () => {
+           dispatch(wsConnectionClosed())
         }
     }, [personal, authorization]);
 

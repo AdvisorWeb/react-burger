@@ -2,7 +2,12 @@ import {createStore, applyMiddleware, Store} from 'redux';
 import {rootReducer} from './reducers/';
 import thunk from 'redux-thunk';
 import {socketMiddleware} from "./middleware/webSocket";
-import {WS_CONNECTION_START} from "./actions/constant";
+import {
+    WS_CONNECTION_CLOSED,
+    WS_CONNECTION_ERROR,
+    WS_CONNECTION_START,
+    WS_CONNECTION_SUCCESS, WS_GET_MESSAGE
+} from "./actions/constant";
 import { AppThunk } from './types';
 import {AppDispatch, RootState} from "./types";
 import {composeWithDevTools} from "redux-devtools-extension";
@@ -13,8 +18,19 @@ import {
     useSelector as selectorHook
 } from 'react-redux';
 
-const wsActions = {
-    WS_CONNECTION_START,
+export interface IWsActions {
+    WS_CONNECTION_START: typeof WS_CONNECTION_START,
+    WS_CONNECTION_CLOSED: typeof WS_CONNECTION_CLOSED,
+    WS_CONNECTION_SUCCESS: typeof WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_ERROR: typeof WS_CONNECTION_ERROR,
+    WS_GET_MESSAGE: typeof WS_GET_MESSAGE,
+}
+const wsActions: IWsActions = {
+    WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_ERROR,
+    WS_CONNECTION_CLOSED,
+    WS_GET_MESSAGE,
+    WS_CONNECTION_START
 }
 
 export const store: Store = createStore(

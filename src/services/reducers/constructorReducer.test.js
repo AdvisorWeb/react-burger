@@ -1,4 +1,4 @@
-import {itemsConstructor} from '../../services/reducers/constructorReducer'
+import {itemsConstructor} from './constructorReducer'
 
 import {
     ADD_ITEM_BUN,
@@ -6,9 +6,9 @@ import {
     REMOVE_ITEM,
     MOVE_ITEM,
     REFRESH_ITEMS,
-} from '../../services/actions/constant'
+} from '../actions/constant'
 
-import {item} from "../data";
+import {item} from "../../__test__/data";
 
 describe('itemsConstructor', () => {
 

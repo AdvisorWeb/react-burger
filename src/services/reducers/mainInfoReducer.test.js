@@ -1,5 +1,5 @@
-import{mainInfoReducer} from '../../services/reducers/mainInfoReducer'
-import {item, ingredient} from "../data";
+import{mainInfoReducer} from './mainInfoReducer'
+import {item, ingredient} from "../../__test__/data";
 import {
     GET_ITEMS_REQUEST,
     GET_ITEMS_SUCCESS,
@@ -8,14 +8,13 @@ import {
     ADD_ITEMS_BUN_COUNT,
     REMOVE_ITEMS_COUNT,
     REFRESH_ITEMS_COUNT,
-} from '../../services/actions/constant'
+} from '../actions/constant'
+import {addCountBun, addCountObj, addCountOther, refreshCount, removeCountOther} from "../../utils/consts";
 
 
 describe('mainInfoReducer', ()=> {
     const id = 'id'
-    const elements = ingredient.map(item => {
-        return {...item, count: 0}
-    })
+    const elements = addCountObj(ingredient)
     test('should return the initial state', () => {
         expect(
             mainInfoReducer(undefined, {}))
@@ -51,13 +50,6 @@ describe('mainInfoReducer', ()=> {
             })
     })
     test('should handle ADD_ITEMS_BUN_COUNT', () => {
-
-        const elementsResult = elements.map(el => {
-            if(el._id === item._id){
-                return {...el, count: 2}
-            }
-            return el
-        })
         expect(
             mainInfoReducer({
                 items: elements,
@@ -67,16 +59,10 @@ describe('mainInfoReducer', ()=> {
                 card: item
             }))
             .toEqual({
-                items: elementsResult
+                items: addCountBun(elements, item._id)
             })
     })
     test('should handle ADD_ITEMS_OTHER_COUNT', () => {
-        const elementsResult = elements.map(el => {
-            if(el._id === item._id){
-                return {...el, count: el.count + 1}
-            }
-            return el
-        })
         expect(
             mainInfoReducer({
                 items: elements,
@@ -86,53 +72,39 @@ describe('mainInfoReducer', ()=> {
                 card: item
             }))
             .toEqual({
-                items: elementsResult
+                items: addCountOther(elements, item._id)
             })
     })
     test('should handle REMOVE_ITEMS_COUNT', () => {
-        const elementsCount = elements.map(el => {
-            if(el._id === id){
-                return {...el, count: 3}
-            }
-            return el
-        })
-        const elementsResult = elementsCount.map(item => {
-            if (item._id === id) {
-                return {...item, count: item.count - 1}
-            }
-            return item
-        })
         expect(
             mainInfoReducer({
-                items: elementsCount,
+                items: elements,
             }, {
                 type: REMOVE_ITEMS_COUNT,
                 text: 'Run the tests',
                 id: id
             }))
             .toEqual( {
-                items: elementsResult
+                items: removeCountOther(elements, id)
             })
     })
     test('should handle REFRESH_ITEMS_COUNT', () => {
         expect(
             mainInfoReducer({
-                items: ingredient,
+                items: elements,
             }, {
                 type: REFRESH_ITEMS_COUNT,
                 text: 'Run the tests',
                 id: 'id'
             }))
             .toEqual({
-                items: ingredient.map(item => {
-                    return {...item, count: 0}
-                })
+                items: refreshCount(elements)
             })
     })
     test('should handle GET_ITEMS_FAILED', () => {
         expect(
             mainInfoReducer({
-                items: ingredient,
+                items: elements,
             }, {
                 type: GET_ITEMS_FAILED,
                 text: 'Run the tests',
