@@ -1,8 +1,13 @@
 import React from 'react';
+import {Redirect} from "react-router-dom";
 
 const Page404 = () => {
     return (
-        <div>Page404</div>
+        <Redirect
+            to={{
+                pathname: '/',
+            }}
+        />
     );
 }
 
